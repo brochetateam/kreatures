@@ -3,214 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kreatures - The Kreatures behind your game. Co-desarrollo, arte y animación para la industria del videojuego.">
-    <title>KREATURES | Game Development Studio</title>
+    <meta name="description" content="Kreatures — The creatures behind your game. Co-desarrollo, arte y animación.">
+    <title>KREATURES · Bestiary</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <canvas id="particles"></canvas>
+
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <nav class="nav">
-        <div class="nav-logo">
-            <span class="logo-k">K</span>
-            <div class="logo-text">
-                <span>KREATURES</span>
-                <span class="logo-sub">[GAME STUDIO]</span>
-            </div>
-        </div>
+        <a href="#hero" class="nav-brand">
+            <span class="nav-sigil">◈</span>
+            <span class="nav-name">KREATURES</span>
+        </a>
         <div class="nav-links">
-            <a href="#work" class="nav-link">(OUR WORK)</a>
-            <a href="#divisions" class="nav-link">{DIVISIONS}</a>
-            <a href="#team" class="nav-link">[TEAM]</a>
-            <a href="#contact" class="nav-link">-></a>
+            <a href="#divisions" class="nav-link"><span class="link-num">01</span>Divisions</a>
+            <a href="#team" class="nav-link"><span class="link-num">02</span>Bestiary</a>
+            <a href="#contact" class="nav-link"><span class="link-num">03</span>Summon</a>
         </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span>
+        </button>
     </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#divisions" class="mobile-link">Divisions</a>
+        <a href="#team" class="mobile-link">Bestiary</a>
+        <a href="#contact" class="mobile-link">Summon</a>
+    </div>
 
     <main>
         <section id="hero" class="section hero">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="title-line">We build</span>
-                    <span class="title-line title-accent">worlds.</span>
+            <div class="hero-circle">
+                <div class="ring ring-outer"></div>
+                <div class="ring ring-mid"></div>
+                <div class="ring ring-inner"></div>
+                <div class="ring ring-core"></div>
+                <div class="ring ring-pulse"></div>
+                <div class="ring-glow"></div>
+                <div class="hero-eye">
+                    <div class="hero-pupil"></div>
+                </div>
+                <div class="hero-beasts">
+                    <div class="beast beast-fox">
+                        <img src="images/fox.png" alt="Code Fox">
+                    </div>
+                    <div class="beast beast-bird">
+                        <img src="images/bird.png" alt="Art Bird">
+                    </div>
+                    <div class="beast beast-cat">
+                        <img src="images/cat.png" alt="Anim Cat">
+                    </div>
+                </div>
+            </div>
+            <div class="hero-text">
+                <h1 class="hero-title" id="heroTitle">
+                    <span class="title-word">WE</span>
+                    <span class="title-word">ARE</span>
+                    <span class="title-word title-creature">KREATURES</span>
                 </h1>
-                <div class="hero-divider"></div>
-                <p class="hero-desc">
-                    Co-desarrollo, arte y animación<br>
-                    para la industria del <span class="text-red">videojuego</span>.
-                </p>
+                <div class="hero-line"></div>
+                <p class="hero-sub">The creatures behind your game</p>
+                <a href="#divisions" class="hero-cta">
+                    Enter the Bestiary
+                    <span class="cta-arrow">→</span>
+                </a>
             </div>
-            
-            <div class="hero-images">
-                <div class="hero-img hero-img-main">
-                    <img src="images/fox.png" alt="Code Fox Kreature" loading="eager">
-                    <div class="img-overlay"></div>
-                </div>
-                <div class="hero-img hero-img-secondary">
-                    <img src="images/bird.png" alt="Art Bird Kreature" loading="eager">
-                    <div class="img-overlay"></div>
-                </div>
-                <div class="hero-img hero-img-tertiary">
-                    <img src="images/cat.png" alt="Anim Cat Kreature" loading="eager">
-                    <div class="img-overlay"></div>
-                </div>
-            </div>
-        </section>
-
-        <div class="horizontal-line"></div>
-
-        <section id="work" class="section work">
-            <div class="work-text">
-                <p class="work-statement">
-                    We know the craft inside out, every design, every line of code, every detail <span class="text-red">built with purpose.</span>
-                </p>
+            <div class="hero-scroll">
+                <span class="scroll-text">SCROLL</span>
+                <div class="scroll-line"></div>
             </div>
         </section>
 
         <section id="divisions" class="section divisions">
-            <div class="section-label">// DIVISIONS</div>
-            
-            <div class="divisions-grid">
-                <div class="division-block" data-division="code">
-                    <div class="division-header">
-                        <span class="division-num">01</span>
-                        <h2 class="division-title">Krea.Code</h2>
+            <div class="section-label">
+                <span class="label-sigil">◈</span>
+                <span>THE THREE DOMAINS</span>
+            </div>
+            <div class="divisions-container">
+                <article class="domain" data-domain="code" style="--domain-color: var(--orange)">
+                    <div class="domain-mask">
+                        <div class="domain-cocoon">
+                            <div class="cocoon-glow"></div>
+                            <div class="cocoon-creature">
+                                <img src="images/fox.png" alt="Code Fox">
+                            </div>
+                        </div>
                     </div>
-                    <div class="division-content">
-                        <p class="division-desc">Gameplay programming, engine optimization, systems integration, tools & pipelines.</p>
-                        <ul class="division-list">
+                    <div class="domain-body">
+                        <div class="domain-header">
+                            <span class="domain-num">01</span>
+                            <h2 class="domain-title">Krea.Code</h2>
+                        </div>
+                        <p class="domain-desc">Gameplay programming, engine optimization, systems integration, tools & pipelines.</p>
+                        <ul class="domain-skills">
                             <li>C++ / C# / Blueprint</li>
                             <li>Unity / Unreal / Custom</li>
                             <li>Multiplatform Optimization</li>
                             <li>Network & AI Systems</li>
                         </ul>
-                    </div>
-                    <div class="division-visual">
-                        <pre class="code-snippet"><code>spawnKreature({
+                        <div class="domain-code">
+                            <pre><code>spawnKreature({
   type: 'digital',
   power: Infinity
 });</code></pre>
+                        </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="division-block" data-division="art">
-                    <div class="division-header">
-                        <span class="division-num">02</span>
-                        <h2 class="division-title">Krea.Art</h2>
+                <article class="domain" data-domain="art" style="--domain-color: var(--butterscotch)">
+                    <div class="domain-mask">
+                        <div class="domain-cocoon">
+                            <div class="cocoon-glow"></div>
+                            <div class="cocoon-creature">
+                                <img src="images/bird.png" alt="Art Bird">
+                            </div>
+                        </div>
                     </div>
-                    <div class="division-content">
-                        <p class="division-desc">Concept art, 3D modeling, texturing, UI/UX design for games.</p>
-                        <ul class="division-list">
+                    <div class="domain-body">
+                        <div class="domain-header">
+                            <span class="domain-num">02</span>
+                            <h2 class="domain-title">Krea.Art</h2>
+                        </div>
+                        <p class="domain-desc">Concept art, 3D modeling, texturing, UI/UX design for games.</p>
+                        <ul class="domain-skills">
                             <li>Character & Environment</li>
                             <li>PBR / Hand-painted</li>
                             <li>High & Low Poly</li>
                             <li>UI/UX Game Interfaces</li>
                         </ul>
+                        <div class="domain-art-grid"></div>
                     </div>
-                    <div class="division-visual">
-                        <div class="art-placeholder">
-                            <div class="art-grid"></div>
+                </article>
+
+                <article class="domain" data-domain="anim" style="--domain-color: var(--red)">
+                    <div class="domain-mask">
+                        <div class="domain-cocoon">
+                            <div class="cocoon-glow"></div>
+                            <div class="cocoon-creature">
+                                <img src="images/cat.png" alt="Anim Cat">
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="division-block" data-division="anim">
-                    <div class="division-header">
-                        <span class="division-num">03</span>
-                        <h2 class="division-title">Krea.Anim</h2>
-                    </div>
-                    <div class="division-content">
-                        <p class="division-desc">Character animation, rigging, VFX, motion design for games.</p>
-                        <ul class="division-list">
+                    <div class="domain-body">
+                        <div class="domain-header">
+                            <span class="domain-num">03</span>
+                            <h2 class="domain-title">Krea.Anim</h2>
+                        </div>
+                        <p class="domain-desc">Character animation, rigging, VFX, motion design for games.</p>
+                        <ul class="domain-skills">
                             <li>2D / 3D Animation</li>
                             <li>Rigging & Skinning</li>
                             <li>Particle VFX</li>
                             <li>Motion Capture Cleanup</li>
                         </ul>
-                    </div>
-                    <div class="division-visual">
-                        <div class="timeline-mini">
-                            <div class="timeline-bar"></div>
-                            <div class="timeline-marker"></div>
+                        <div class="domain-timeline">
+                            <div class="tl-track"></div>
+                            <div class="tl-dot"></div>
                         </div>
                     </div>
-                </div>
+                </article>
             </div>
         </section>
-
-        <div class="horizontal-line"></div>
 
         <section id="team" class="section team">
-            <div class="section-label">// TEAM</div>
-            
-            <div class="team-grid">
-                <div class="creature-card">
-                    <div class="creature-img">
+            <div class="section-label">
+                <span class="label-sigil">◈</span>
+                <span>THE BESTIARY</span>
+            </div>
+            <div class="tarots">
+                <div class="tarot" data-beast="fox">
+                    <div class="tarot-border">
+                        <div class="tarot-corner tl"></div>
+                        <div class="tarot-corner tr"></div>
+                        <div class="tarot-corner bl"></div>
+                        <div class="tarot-corner br"></div>
+                    </div>
+                    <div class="tarot-img">
                         <img src="images/fox.png" alt="Code Fox">
+                        <div class="tarot-overlay"></div>
                     </div>
-                    <div class="creature-info">
-                        <h3>Code_Fox</h3>
-                        <span class="creature-role">// LEAD_DEVELOPER</span>
-                        <div class="creature-stats">
-                            <div class="stat-row">
-                                <span>CODE</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:95%"></div></div>
+                    <div class="tarot-body">
+                        <div class="tarot-header">
+                            <span class="tarot-num">I</span>
+                            <h3>Code_Fox</h3>
+                        </div>
+                        <span class="tarot-role">The Architect</span>
+                        <div class="tarot-stats">
+                            <div class="tstat">
+                                <span class="tstat-label">CODE</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:95%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>DEBUG</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:88%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">DEBUG</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:88%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>ARCH</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:92%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">ARCH</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:92%"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="creature-card">
-                    <div class="creature-img">
+                <div class="tarot" data-beast="bird">
+                    <div class="tarot-border">
+                        <div class="tarot-corner tl"></div>
+                        <div class="tarot-corner tr"></div>
+                        <div class="tarot-corner bl"></div>
+                        <div class="tarot-corner br"></div>
+                    </div>
+                    <div class="tarot-img">
                         <img src="images/bird.png" alt="Art Bird">
+                        <div class="tarot-overlay"></div>
                     </div>
-                    <div class="creature-info">
-                        <h3>Art_Bird</h3>
-                        <span class="creature-role">// ART_DIRECTOR</span>
-                        <div class="creature-stats">
-                            <div class="stat-row">
-                                <span>DRAW</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:97%"></div></div>
+                    <div class="tarot-body">
+                        <div class="tarot-header">
+                            <span class="tarot-num">II</span>
+                            <h3>Art_Bird</h3>
+                        </div>
+                        <span class="tarot-role">The Visionary</span>
+                        <div class="tarot-stats">
+                            <div class="tstat">
+                                <span class="tstat-label">DRAW</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:97%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>3D</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:85%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">3D</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:85%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>UI/UX</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:90%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">UI/UX</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:90%"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="creature-card">
-                    <div class="creature-img">
-                        <img src="images/cat.png" alt="Anim Cat">
+                <div class="tarot" data-beast="cat">
+                    <div class="tarot-border">
+                        <div class="tarot-corner tl"></div>
+                        <div class="tarot-corner tr"></div>
+                        <div class="tarot-corner bl"></div>
+                        <div class="tarot-corner br"></div>
                     </div>
-                    <div class="creature-info">
-                        <h3>Anim_Cat</h3>
-                        <span class="creature-role">// ANIMATION_LEAD</span>
-                        <div class="creature-stats">
-                            <div class="stat-row">
-                                <span>ANIM</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:94%"></div></div>
+                    <div class="tarot-img">
+                        <img src="images/cat.png" alt="Anim Cat">
+                        <div class="tarot-overlay"></div>
+                    </div>
+                    <div class="tarot-body">
+                        <div class="tarot-header">
+                            <span class="tarot-num">III</span>
+                            <h3>Anim_Cat</h3>
+                        </div>
+                        <span class="tarot-role">The Shifter</span>
+                        <div class="tarot-stats">
+                            <div class="tstat">
+                                <span class="tstat-label">ANIM</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:94%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>RIG</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:91%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">RIG</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:91%"></div></div>
                             </div>
-                            <div class="stat-row">
-                                <span>VFX</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width:87%"></div></div>
+                            <div class="tstat">
+                                <span class="tstat-label">VFX</span>
+                                <div class="tstat-bar"><div class="tstat-fill" style="--w:87%"></div></div>
                             </div>
                         </div>
                     </div>
@@ -218,76 +280,76 @@
             </div>
         </section>
 
-        <div class="horizontal-line"></div>
-
         <section id="contact" class="section contact">
-            <div class="section-label">// CONTACT</div>
-            
-            <div class="contact-grid">
-                <div class="contact-left">
-                    <h2 class="contact-title">Let's build<br>something <span class="text-red">together.</span></h2>
-                    <div class="contact-details">
+            <div class="section-label">
+                <span class="label-sigil">◈</span>
+                <span>THE SUMMONING</span>
+            </div>
+            <div class="contact-dual">
+                <div class="contact-circle">
+                    <div class="c-ring c-ring-1"></div>
+                    <div class="c-ring c-ring-2"></div>
+                    <div class="c-ring c-ring-3"></div>
+                    <div class="c-ring c-ring-4"></div>
+                    <div class="c-sigil">
+                        <span>◈</span>
+                    </div>
+                    <div class="contact-info">
                         <p>hello@kreatures.studio</p>
-                        <p>España · Working Worldwide</p>
+                        <p>España · Worldwide</p>
                     </div>
                 </div>
-                
                 <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>NAME:</label>
-                            <input type="text" name="name" required placeholder="your_name">
-                        </div>
-                        <div class="form-group">
-                            <label>EMAIL:</label>
-                            <input type="email" name="email" required placeholder="your@email.com">
-                        </div>
+                    <div class="field">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="---">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>COMPANY:</label>
-                            <input type="text" name="company" placeholder="studio_name">
-                        </div>
-                        <div class="form-group">
-                            <label>SERVICE:</label>
-                            <select name="service" required>
-                                <option value="">-- select --</option>
-                                <option value="code">Krea.Code</option>
-                                <option value="art">Krea.Art</option>
-                                <option value="anim">Krea.Anim</option>
-                                <option value="multi">Multi-Division</option>
-                            </select>
-                        </div>
+                    <div class="field">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required placeholder="---">
                     </div>
-                    <div class="form-group full">
-                        <label>MESSAGE:</label>
-                        <textarea name="message" rows="4" required placeholder="Tell us about your project..."></textarea>
+                    <div class="field">
+                        <label for="service">Summon For</label>
+                        <select id="service" name="service" required>
+                            <option value="">— Choose —</option>
+                            <option value="code">Krea.Code</option>
+                            <option value="art">Krea.Art</option>
+                            <option value="anim">Krea.Anim</option>
+                            <option value="multi">Multi-Domain</option>
+                        </select>
                     </div>
-                    <button type="submit" class="btn-submit">
-                        <span>SEND_TRANSMISSION</span>
-                        <span class="btn-arrow">-></span>
+                    <div class="field full">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="4" required placeholder="Speak your intent..."></textarea>
+                    </div>
+                    <button type="submit" class="ritual-btn">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">Initiate Summoning</span>
+                        <span class="btn-sigil">◈</span>
                     </button>
                 </form>
             </div>
         </section>
     </main>
 
-    <div class="skip-indicator" id="skipIndicator">
+    <footer class="footer">
+        <span class="footer-sigil">◈</span>
+        <p>© 2026 KREATURES · All rights reserved</p>
+    </footer>
+
+    <div class="skip" id="skipBar">
         <span class="skip-label">SKIP</span>
-        <span class="skip-arrow">-></span>
+        <span class="skip-arrow">→</span>
         <div class="skip-track">
             <div class="skip-fill" id="skipFill"></div>
         </div>
-        <div class="skip-sections">
-            <span data-section="hero" class="active">HOME</span>
-            <span data-section="work">WORK</span>
-            <span data-section="divisions">DIVISIONS</span>
-            <span data-section="team">TEAM</span>
-            <span data-section="contact">CONTACT</span>
+        <div class="skip-pages">
+            <span data-section="hero">HOME</span>
+            <span data-section="divisions">DOMAINS</span>
+            <span data-section="team">BESTIARY</span>
+            <span data-section="contact">SUMMON</span>
         </div>
     </div>
-
-    <div class="grain-overlay"></div>
 
     <script src="script.js"></script>
 </body>
