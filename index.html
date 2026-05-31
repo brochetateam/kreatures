@@ -4,405 +4,290 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kreatures - The Kreatures behind your game. Co-desarrollo, arte y animación para la industria del videojuego.">
-    <meta name="keywords" content="videojuegos, outsourcing, co-desarrollo, arte, animación, game development, Kreatures">
-    <title>Kreatures | The Kreatures Behind Your Game</title>
+    <title>KREATURES | Game Development Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="grid-overlay"></div>
-    
-    <div class="eye-cursor" id="eyeCursor">
-        <svg viewBox="0 0 40 40" width="40" height="40">
-            <ellipse cx="20" cy="20" rx="18" ry="12" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-            <circle cx="20" cy="20" r="6" fill="var(--rose-madder)"/>
-            <circle cx="22" cy="18" r="2" fill="var(--bg-dark)"/>
-        </svg>
-    </div>
-
-    <nav class="main-nav" id="mainNav">
+    <nav class="nav">
         <div class="nav-logo">
-            <svg viewBox="0 0 120 40" class="logo-svg">
-                <text x="0" y="30" class="logo-text">KREA</text>
-                <text x="68" y="30" class="logo-text logo-dot">.</text>
-                <text x="78" y="30" class="logo-text">TURES</text>
-            </svg>
+            <span class="logo-k">K</span>
+            <div class="logo-text">
+                <span>KREATURES</span>
+                <span class="logo-sub">[GAME STUDIO]</span>
+            </div>
         </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#hero" data-section="hero">Home</a></li>
-            <li><a href="#divisions" data-section="divisions">Divisions</a></li>
-            <li><a href="#team" data-section="team">Team</a></li>
-            <li><a href="#contact" data-section="contact">Contact</a></li>
-        </ul>
+        <div class="nav-links">
+            <a href="#work" class="nav-link">(OUR WORK)</a>
+            <a href="#divisions" class="nav-link">{DIVISIONS}</a>
+            <a href="#team" class="nav-link">[TEAM]</a>
+            <a href="#contact" class="nav-link">-></a>
+        </div>
     </nav>
 
     <main>
-        <section id="hero" class="section hero-section">
+        <section id="hero" class="section hero">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="title-line">The <span class="highlight">Kreatures</span></span>
-                    <span class="title-line">behind your</span>
-                    <span class="title-line">game</span>
+                    <span class="title-line">We build</span>
+                    <span class="title-line title-accent">worlds.</span>
                 </h1>
-                <p class="hero-subtitle">Co-desarrollo · Arte · Animación</p>
-                <div class="hero-cta">
-                    <a href="#divisions" class="btn btn-primary">Explorar Divisiones</a>
-                    <a href="#contact" class="btn btn-secondary">Contactar</a>
-                </div>
-            </div>
-            <div class="hero-decoration">
-                <svg viewBox="0 0 200 200" class="hero-creature">
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="var(--butterscotch)" stroke-width="1" stroke-dasharray="5,5"/>
-                    <ellipse cx="100" cy="100" rx="60" ry="40" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-                    <circle cx="100" cy="100" r="20" fill="var(--rose-madder)"/>
-                    <circle cx="108" cy="92" r="6" fill="var(--bg-dark)"/>
-                </svg>
-            </div>
-        </section>
-
-        <section id="divisions" class="section divisions-section">
-            <div class="section-header">
-                <h2>Nuestras Divisiones</h2>
-                <p class="section-subtitle">// Select your Kreature</p>
+                <div class="hero-divider"></div>
+                <p class="hero-desc">
+                    Co-desarrollo, arte y animación<br>
+                    para la industria del <span class="text-red">videojuego</span>.
+                </p>
             </div>
             
-            <div class="division-selector">
-                <button class="division-tab active" data-division="code">
-                    <span class="tab-icon">&lt;/&gt;</span>
-                    <span class="tab-name">Krea.Code</span>
-                </button>
-                <button class="division-tab" data-division="art">
-                    <span class="tab-icon">◆</span>
-                    <span class="tab-name">Krea.Art</span>
-                </button>
-                <button class="division-tab" data-division="anim">
-                    <span class="tab-icon">▶</span>
-                    <span class="tab-name">Krea.Anim</span>
-                </button>
+            <div class="hero-images">
+                <div class="hero-img hero-img-main">
+                    <img src="images/fox.png" alt="Code Fox Kreature" loading="eager">
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="hero-img hero-img-secondary">
+                    <img src="images/bird.png" alt="Art Bird Kreature" loading="eager">
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="hero-img hero-img-tertiary">
+                    <img src="images/cat.png" alt="Anim Cat Kreature" loading="eager">
+                    <div class="img-overlay"></div>
+                </div>
             </div>
+        </section>
 
-            <div class="division-panels">
-                <div class="division-panel active" id="panel-code" data-division="code">
-                    <div class="panel-header">
-                        <h3>Krea.Code</h3>
-                        <span class="panel-tag">// DEVELOPMENT</span>
+        <div class="horizontal-line"></div>
+
+        <section id="work" class="section work">
+            <div class="work-text">
+                <p class="work-statement">
+                    We know the craft inside out, every design, every line of code, every detail <span class="text-red">built with purpose.</span>
+                </p>
+            </div>
+        </section>
+
+        <section id="divisions" class="section divisions">
+            <div class="section-label">// DIVISIONS</div>
+            
+            <div class="divisions-grid">
+                <div class="division-block" data-division="code">
+                    <div class="division-header">
+                        <span class="division-num">01</span>
+                        <h2 class="division-title">Krea.Code</h2>
                     </div>
-                    <div class="panel-content">
-                        <div class="service-grid">
-                            <div class="service-card">
-                                <span class="service-icon">01</span>
-                                <h4>Gameplay Programming</h4>
-                                <p>Mecánicas de juego, sistemas de combate, física y lógica core.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">02</span>
-                                <h4>Engine Optimization</h4>
-                                <p>Render pipelines, profiling, memoria y rendimiento multiplataforma.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">03</span>
-                                <h4>Systems Integration</h4>
-                                <p>IA, networking, audio engines y middleware third-party.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">04</span>
-                                <h4>Tools & Pipelines</h4>
-                                <p>Build systems, herramientas internias y automatización de workflows.</p>
-                            </div>
-                        </div>
-                        <div class="panel-visual">
-                            <pre class="code-block"><code>function spawnKreature() {
-  const kreature = new Kreature({
-    type: 'digital',
-    power: Infinity,
-    skills: ['C++', 'Unity', 'Unreal']
-  });
-  return kreature.born();
-}</code></pre>
+                    <div class="division-content">
+                        <p class="division-desc">Gameplay programming, engine optimization, systems integration, tools & pipelines.</p>
+                        <ul class="division-list">
+                            <li>C++ / C# / Blueprint</li>
+                            <li>Unity / Unreal / Custom</li>
+                            <li>Multiplatform Optimization</li>
+                            <li>Network & AI Systems</li>
+                        </ul>
+                    </div>
+                    <div class="division-visual">
+                        <pre class="code-snippet"><code>spawnKreature({
+  type: 'digital',
+  power: Infinity
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="division-block" data-division="art">
+                    <div class="division-header">
+                        <span class="division-num">02</span>
+                        <h2 class="division-title">Krea.Art</h2>
+                    </div>
+                    <div class="division-content">
+                        <p class="division-desc">Concept art, 3D modeling, texturing, UI/UX design for games.</p>
+                        <ul class="division-list">
+                            <li>Character & Environment</li>
+                            <li>PBR / Hand-painted</li>
+                            <li>High & Low Poly</li>
+                            <li>UI/UX Game Interfaces</li>
+                        </ul>
+                    </div>
+                    <div class="division-visual">
+                        <div class="art-placeholder">
+                            <div class="art-grid"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="division-panel" id="panel-art" data-division="art">
-                    <div class="panel-header">
-                        <h3>Krea.Art</h3>
-                        <span class="panel-tag">// ART_DIRECTION</span>
+                <div class="division-block" data-division="anim">
+                    <div class="division-header">
+                        <span class="division-num">03</span>
+                        <h2 class="division-title">Krea.Anim</h2>
                     </div>
-                    <div class="panel-content">
-                        <div class="service-grid">
-                            <div class="service-card">
-                                <span class="service-icon">01</span>
-                                <h4>Concept Art</h4>
-                                <p>Personajes, entornos, props y Bible de arte visual.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">02</span>
-                                <h4>3D Modeling</h4>
-                                <p>Alto y bajo polígono, sculptsDigitales y optimización para motor.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">03</span>
-                                <h4>Texturing</h4>
-                                <p>PBR, hand-painted, UV mapping y materiales procedural.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">04</span>
-                                <h4>UI/UX Design</h4>
-                                <p>Interfaces de juego, menus, HUD y experiencia de usuario.</p>
-                            </div>
-                        </div>
-                        <div class="panel-visual">
-                            <div class="art-preview">
-                                <div class="art-frame">
-                                    <div class="art-placeholder">
-                                        <span>CONCEPT</span>
-                                        <span>ART</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="division-content">
+                        <p class="division-desc">Character animation, rigging, VFX, motion design for games.</p>
+                        <ul class="division-list">
+                            <li>2D / 3D Animation</li>
+                            <li>Rigging & Skinning</li>
+                            <li>Particle VFX</li>
+                            <li>Motion Capture Cleanup</li>
+                        </ul>
                     </div>
-                </div>
-
-                <div class="division-panel" id="panel-anim" data-division="anim">
-                    <div class="panel-header">
-                        <h3>Krea.Anim</h3>
-                        <span class="panel-tag">// ANIMATION_VFX</span>
-                    </div>
-                    <div class="panel-content">
-                        <div class="service-grid">
-                            <div class="service-card">
-                                <span class="service-icon">01</span>
-                                <h4>Character Animation</h4>
-                                <p>Ciclos de locomoción, combat, facial y motion capture cleanup.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">02</span>
-                                <h4>Rigging</h4>
-                                <p>Setup técnico, skinning, control rigs y herramientas de animación.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">03</span>
-                                <h4>VFX</h4>
-                                <p>Partículas, shaders, efectos de ambiente y cinemáticas in-engine.</p>
-                            </div>
-                            <div class="service-card">
-                                <span class="service-icon">04</span>
-                                <h4>Motion Design</h4>
-                                <p>Transiciones,UI animation, logo reveals y efectos de pantalla.</p>
-                            </div>
-                        </div>
-                        <div class="panel-visual">
-                            <div class="anim-preview">
-                                <div class="anim-timeline">
-                                    <div class="timeline-track"></div>
-                                    <div class="timeline-playhead"></div>
-                                    <div class="timeline-frames">
-                                        <span></span><span></span><span></span><span></span><span></span>
-                                        <span></span><span></span><span></span><span></span><span></span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="division-visual">
+                        <div class="timeline-mini">
+                            <div class="timeline-bar"></div>
+                            <div class="timeline-marker"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="team" class="section team-section">
-            <div class="section-header">
-                <h2>Nuestras Criaturas</h2>
-                <p class="section-subtitle">// CHARACTER_SELECT</p>
-            </div>
+        <div class="horizontal-line"></div>
+
+        <section id="team" class="section team">
+            <div class="section-label">// TEAM</div>
             
             <div class="team-grid">
-                <article class="creature-card" data-creature="fox">
-                    <div class="creature-avatar">
-                        <svg viewBox="0 0 120 120" class="creature-svg">
-                            <polygon points="60,10 90,50 30,50" fill="none" stroke="var(--butterscotch)" stroke-width="2"/>
-                            <polygon points="60,110 90,70 30,70" fill="none" stroke="var(--butterscotch)" stroke-width="2"/>
-                            <circle cx="60" cy="60" r="30" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-                            <circle cx="60" cy="60" r="8" fill="var(--rose-madder)"/>
-                            <circle cx="63" cy="57" r="2" fill="var(--bg-dark)"/>
-                        </svg>
+                <div class="creature-card">
+                    <div class="creature-img">
+                        <img src="images/fox.png" alt="Code Fox">
                     </div>
                     <div class="creature-info">
-                        <h3 class="creature-name">Code_Fox</h3>
-                        <span class="creature-class">// LEAD_DEVELOPER</span>
+                        <h3>Code_Fox</h3>
+                        <span class="creature-role">// LEAD_DEVELOPER</span>
                         <div class="creature-stats">
-                            <div class="stat">
-                                <span class="stat-label">CODE</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 95%"></div></div>
+                            <div class="stat-row">
+                                <span>CODE</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:95%"></div></div>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">DEBUG</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 88%"></div></div>
+                            <div class="stat-row">
+                                <span>DEBUG</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:88%"></div></div>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">ARCH</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 92%"></div></div>
+                            <div class="stat-row">
+                                <span>ARCH</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:92%"></div></div>
                             </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="creature-card" data-creature="bird">
-                    <div class="creature-avatar">
-                        <svg viewBox="0 0 120 120" class="creature-svg">
-                            <ellipse cx="60" cy="60" rx="40" ry="30" fill="none" stroke="var(--light-navy)" stroke-width="2"/>
-                            <path d="M20,60 Q60,20 100,60" fill="none" stroke="var(--light-navy)" stroke-width="2"/>
-                            <circle cx="45" cy="55" r="4" fill="var(--rose-madder)"/>
-                            <circle cx="75" cy="55" r="4" fill="var(--rose-madder)"/>
-                            <path d="M55,70 L60,80 L65,70" fill="none" stroke="var(--butterscotch)" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <div class="creature-info">
-                        <h3 class="creature-name">Art_Bird</h3>
-                        <span class="creature-class">// ART_DIRECTOR</span>
-                        <div class="creature-stats">
-                            <div class="stat">
-                                <span class="stat-label">DRAW</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 97%"></div></div>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">3D</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 85%"></div></div>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">UI/UX</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="creature-card" data-creature="cat">
-                    <div class="creature-avatar">
-                        <svg viewBox="0 0 120 120" class="creature-svg">
-                            <polygon points="35,30 45,60 25,60" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-                            <polygon points="85,30 95,60 75,60" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-                            <circle cx="60" cy="65" r="35" fill="none" stroke="var(--rose-madder)" stroke-width="2"/>
-                            <ellipse cx="45" cy="60" rx="10" ry="12" fill="var(--butterscotch)"/>
-                            <ellipse cx="75" cy="60" rx="10" ry="12" fill="var(--butterscotch)"/>
-                            <circle cx="45" cy="60" r="4" fill="var(--bg-dark)"/>
-                            <circle cx="75" cy="60" r="4" fill="var(--bg-dark)"/>
-                        </svg>
-                    </div>
-                    <div class="creature-info">
-                        <h3 class="creature-name">Anim_Cat</h3>
-                        <span class="creature-class">// ANIMATION_LEAD</span>
-                        <div class="creature-stats">
-                            <div class="stat">
-                                <span class="stat-label">ANIM</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 94%"></div></div>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">RIG</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 91%"></div></div>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">VFX</span>
-                                <div class="stat-bar"><div class="stat-fill" style="width: 87%"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <section id="contact" class="section contact-section">
-            <div class="section-header">
-                <h2>Contacto</h2>
-                <p class="section-subtitle">// TRANSMISSION_INCOMING</p>
-            </div>
-            
-            <div class="contact-container">
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">NOMBRE:</label>
-                        <input type="text" id="name" name="name" required placeholder="your_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">EMAIL:</label>
-                        <input type="email" id="email" name="email" required placeholder="your@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">COMPANY:</label>
-                        <input type="text" id="company" name="company" placeholder="studio_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">SERVICE:</label>
-                        <select id="service" name="service" required>
-                            <option value="">-- select division --</option>
-                            <option value="code">Krea.Code</option>
-                            <option value="art">Krea.Art</option>
-                            <option value="anim">Krea.Anim</option>
-                            <option value="multi">Multi-Division</option>
-                        </select>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="message">MESSAGE:</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-submit">
-                        <span>SEND_TRANSMISSION</span>
-                        <span class="btn-arrow">→</span>
-                    </button>
-                </form>
-                
-                <div class="contact-info">
-                    <div class="info-block">
-                        <h4>LOCATION</h4>
-                        <p>España · Working Worldwide</p>
-                    </div>
-                    <div class="info-block">
-                        <h4>EMAIL</h4>
-                        <p>hello@kreatures.studio</p>
-                    </div>
-                    <div class="info-block">
-                        <h4>SOCIAL</h4>
-                        <div class="social-links">
-                            <a href="#" class="social-link">Twitter</a>
-                            <a href="#" class="social-link">LinkedIn</a>
-                            <a href="#" class="social-link">ArtStation</a>
                         </div>
                     </div>
                 </div>
+
+                <div class="creature-card">
+                    <div class="creature-img">
+                        <img src="images/bird.png" alt="Art Bird">
+                    </div>
+                    <div class="creature-info">
+                        <h3>Art_Bird</h3>
+                        <span class="creature-role">// ART_DIRECTOR</span>
+                        <div class="creature-stats">
+                            <div class="stat-row">
+                                <span>DRAW</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:97%"></div></div>
+                            </div>
+                            <div class="stat-row">
+                                <span>3D</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:85%"></div></div>
+                            </div>
+                            <div class="stat-row">
+                                <span>UI/UX</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:90%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="creature-card">
+                    <div class="creature-img">
+                        <img src="images/cat.png" alt="Anim Cat">
+                    </div>
+                    <div class="creature-info">
+                        <h3>Anim_Cat</h3>
+                        <span class="creature-role">// ANIMATION_LEAD</span>
+                        <div class="creature-stats">
+                            <div class="stat-row">
+                                <span>ANIM</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:94%"></div></div>
+                            </div>
+                            <div class="stat-row">
+                                <span>RIG</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:91%"></div></div>
+                            </div>
+                            <div class="stat-row">
+                                <span>VFX</span>
+                                <div class="stat-bar"><div class="stat-fill" style="width:87%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="horizontal-line"></div>
+
+        <section id="contact" class="section contact">
+            <div class="section-label">// CONTACT</div>
+            
+            <div class="contact-grid">
+                <div class="contact-left">
+                    <h2 class="contact-title">Let's build<br>something <span class="text-red">together.</span></h2>
+                    <div class="contact-details">
+                        <p>hello@kreatures.studio</p>
+                        <p>España · Working Worldwide</p>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>NAME:</label>
+                            <input type="text" name="name" required placeholder="your_name">
+                        </div>
+                        <div class="form-group">
+                            <label>EMAIL:</label>
+                            <input type="email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>COMPANY:</label>
+                            <input type="text" name="company" placeholder="studio_name">
+                        </div>
+                        <div class="form-group">
+                            <label>SERVICE:</label>
+                            <select name="service" required>
+                                <option value="">-- select --</option>
+                                <option value="code">Krea.Code</option>
+                                <option value="art">Krea.Art</option>
+                                <option value="anim">Krea.Anim</option>
+                                <option value="multi">Multi-Division</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>MESSAGE:</label>
+                        <textarea name="message" rows="4" required placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <span>SEND_TRANSMISSION</span>
+                        <span class="btn-arrow">-></span>
+                    </button>
+                </form>
             </div>
         </section>
     </main>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <svg viewBox="0 0 120 40" class="logo-svg">
-                    <text x="0" y="30" class="logo-text">KREA</text>
-                    <text x="68" y="30" class="logo-text logo-dot">.</text>
-                    <text x="78" y="30" class="logo-text">TURES</text>
-                </svg>
-            </div>
-            <p class="footer-copy">© 2026 Kreatures Studio. All rights reserved.</p>
+    <div class="skip-indicator" id="skipIndicator">
+        <span class="skip-label">SKIP</span>
+        <span class="skip-arrow">-></span>
+        <div class="skip-track">
+            <div class="skip-fill" id="skipFill"></div>
         </div>
-    </footer>
-
-    <div class="mobile-progress" id="mobileProgress">
-        <div class="progress-track">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-labels">
-            <span data-section="hero">HOME</span>
+        <div class="skip-sections">
+            <span data-section="hero" class="active">HOME</span>
+            <span data-section="work">WORK</span>
             <span data-section="divisions">DIVISIONS</span>
             <span data-section="team">TEAM</span>
             <span data-section="contact">CONTACT</span>
         </div>
     </div>
+
+    <div class="grain-overlay"></div>
 
     <script src="script.js"></script>
 </body>
