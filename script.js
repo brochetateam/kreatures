@@ -1,3 +1,14 @@
+function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function cssRgba(name, alpha) {
+    const hex = cssVar(name);
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.getElementById('cursorGlow');
     const pupil = document.querySelector('.hero-pupil');
@@ -11,6 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const tarots = document.querySelectorAll('.tarot');
     const domainLinks = document.querySelectorAll('.nav-link');
     const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    const themes = ['bestiary', 'cinder', 'depths', 'solar', 'pale'];
+    function setTheme(name) {
+        document.documentElement.setAttribute('data-theme', name);
+        localStorage.setItem('kreatures-theme', name);
+        document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === name));
+    }
+    function initTheme() {
+        const saved = localStorage.getItem('kreatures-theme');
+        if (saved && themes.includes(saved)) { setTheme(saved); return; }
+        const rand = themes[Math.floor(Math.random() * themes.length)];
+        setTheme(rand);
+    }
+    initTheme();
+    document.querySelectorAll('.theme-dot').forEach(dot => {
+        dot.addEventListener('click', () => setTheme(dot.dataset.theme));
+    });
 
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
@@ -389,27 +417,27 @@ function initSnake() {
         }
 
         function draw() {
-            ctx.fillStyle = '#0a1628';
+            ctx.fillStyle = cssVar('--bg');
             ctx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
-            ctx.fillStyle = 'rgba(247,127,0,0.08)';
+            ctx.fillStyle = cssRgba('--orange', 0.08);
             for (let x = 0; x < COLS; x++)
                 for (let y = 0; y < ROWS; y++)
                     if ((x + y) % 2 === 0) ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
             snake.forEach((s, i) => {
-                ctx.fillStyle = i === 0 ? '#F77F00' : '#E68A2E';
-                ctx.shadowColor = '#F77F00';
+                ctx.fillStyle = cssVar('--orange');
+                ctx.shadowColor = cssVar('--orange');
                 ctx.shadowBlur = i === 0 ? 8 : 3;
                 ctx.fillRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
             });
             ctx.shadowBlur = 0;
-            ctx.fillStyle = '#D62828';
-            ctx.shadowColor = '#D62828';
+            ctx.fillStyle = cssVar('--red');
+            ctx.shadowColor = cssVar('--red');
             ctx.shadowBlur = 10;
             ctx.beginPath();
             ctx.arc(food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, 4, 0, 2 * Math.PI);
             ctx.fill();
             ctx.shadowBlur = 0;
-            ctx.fillStyle = '#EAE2B7';
+            ctx.fillStyle = cssVar('--cream');
             ctx.font = '8px Space Mono';
             ctx.fillText('SCORE:' + score, 4, 10);
         }
@@ -579,9 +607,9 @@ function initArt() {
                 ctx.lineTo(bx, by);
             }
         }
-        ctx.strokeStyle = '#F77F00';
+        ctx.strokeStyle = cssVar('--orange');
         ctx.lineWidth = 2;
-        ctx.shadowColor = '#F77F00';
+        ctx.shadowColor = cssVar('--orange');
         ctx.shadowBlur = 8;
         ctx.stroke();
         ctx.shadowBlur = 0;
@@ -619,8 +647,8 @@ function initArt() {
     function drawBranches() {
         branches.forEach(b => {
             ctx.globalAlpha = b.life * 0.4;
-            ctx.fillStyle = b.hue === 35 ? '#FCBF49' : '#D62828';
-            ctx.shadowColor = b.hue === 35 ? '#FCBF49' : '#D62828';
+            ctx.fillStyle = b.hue === 35 ? cssVar('--butterscotch') : cssVar('--red');
+            ctx.shadowColor = b.hue === 35 ? cssVar('--butterscotch') : cssVar('--red');
             ctx.shadowBlur = 6;
             ctx.beginPath();
             ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
@@ -650,7 +678,7 @@ function initArt() {
             }
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#000d17';
+        ctx.fillStyle = cssVar('--bg');
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         if (progress > 0) drawFox();
         if (phase >= 1) {
@@ -682,41 +710,26 @@ function initAnim() {
     let ctx;
 
     const shapes = [
-        {
-            name: 'fox',
-            color: '#F77F00',
-            shadow: 'rgba(247,127,0,0.3)',
-            verts: [
-                [0.5, 0.08], [0.62, 0.12], [0.58, 0.2], [0.7, 0.25],
-                [0.65, 0.32], [0.55, 0.3], [0.5, 0.38], [0.5, 0.7],
-                [0.45, 0.7], [0.45, 0.38], [0.35, 0.3], [0.3, 0.32],
-                [0.35, 0.25], [0.42, 0.2], [0.38, 0.12]
-            ]
-        },
-        {
-            name: 'bird',
-            color: '#FCBF49',
-            shadow: 'rgba(252,191,73,0.3)',
-            verts: [
-                [0.5, 0.1], [0.55, 0.08], [0.6, 0.1], [0.75, 0.15],
-                [0.85, 0.18], [0.8, 0.25], [0.65, 0.28], [0.52, 0.3],
-                [0.5, 0.5], [0.5, 0.7], [0.45, 0.7], [0.45, 0.5],
-                [0.35, 0.28], [0.2, 0.25], [0.15, 0.18],
-                [0.25, 0.15], [0.4, 0.1], [0.45, 0.08]
-            ]
-        },
-        {
-            name: 'cat',
-            color: '#D62828',
-            shadow: 'rgba(214,40,40,0.3)',
-            verts: [
-                [0.5, 0.05], [0.56, 0.05], [0.6, 0.1], [0.68, 0.12],
-                [0.72, 0.18], [0.7, 0.25], [0.65, 0.28], [0.55, 0.3],
-                [0.5, 0.38], [0.5, 0.7], [0.45, 0.7], [0.45, 0.38],
-                [0.35, 0.3], [0.3, 0.28], [0.28, 0.25],
-                [0.32, 0.18], [0.4, 0.12], [0.44, 0.1]
-            ]
-        }
+        { name: 'fox', cssKey: '--orange', verts: [
+            [0.5, 0.08], [0.62, 0.12], [0.58, 0.2], [0.7, 0.25],
+            [0.65, 0.32], [0.55, 0.3], [0.5, 0.38], [0.5, 0.7],
+            [0.45, 0.7], [0.45, 0.38], [0.35, 0.3], [0.3, 0.32],
+            [0.35, 0.25], [0.42, 0.2], [0.38, 0.12]
+        ]},
+        { name: 'bird', cssKey: '--butterscotch', verts: [
+            [0.5, 0.1], [0.55, 0.08], [0.6, 0.1], [0.75, 0.15],
+            [0.85, 0.18], [0.8, 0.25], [0.65, 0.28], [0.52, 0.3],
+            [0.5, 0.5], [0.5, 0.7], [0.45, 0.7], [0.45, 0.5],
+            [0.35, 0.28], [0.2, 0.25], [0.15, 0.18],
+            [0.25, 0.15], [0.4, 0.1], [0.45, 0.08]
+        ]},
+        { name: 'cat', cssKey: '--red', verts: [
+            [0.5, 0.05], [0.56, 0.05], [0.6, 0.1], [0.68, 0.12],
+            [0.72, 0.18], [0.7, 0.25], [0.65, 0.28], [0.55, 0.3],
+            [0.5, 0.38], [0.5, 0.7], [0.45, 0.7], [0.45, 0.38],
+            [0.35, 0.3], [0.3, 0.28], [0.28, 0.25],
+            [0.32, 0.18], [0.4, 0.12], [0.44, 0.1]
+        ]}
     ];
 
     function startAnim() {
@@ -790,15 +803,15 @@ function initAnim() {
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#000d17';
+        ctx.fillStyle = cssVar('--bg');
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         const s1 = Math.floor(morphCycle / 2) % 3;
         const s2 = (s1 + 1) % 3;
         const verts = lerpVerts(shapes[s1].verts, shapes[s2].verts, morphT);
-        const color = lerpColor(shapes[s1].color, shapes[s2].color, morphT);
-        drawShape(verts, color, 'rgba(255,200,100,0.15)');
+        const color = lerpColor(cssVar(shapes[s1].cssKey), cssVar(shapes[s2].cssKey), morphT);
+        drawShape(verts, color, cssRgba('--butterscotch', 0.15));
         const names = ['Fox','Bird','Cat'];
-        ctx.fillStyle = 'rgba(234,226,183,0.5)';
+        ctx.fillStyle = cssRgba('--cream', 0.5);
         ctx.font = '9px Space Mono';
         ctx.textAlign = 'center';
         ctx.fillText(names[s1] + ' → ' + names[s2], canvas.width / 2, 20);
