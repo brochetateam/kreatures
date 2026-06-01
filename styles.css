@@ -305,7 +305,6 @@ body::after {
     line-height: 0.9; letter-spacing: -2px;
     opacity: 0; transform: translateY(40px);
     animation: riseWord 0.8s var(--ease-out) forwards;
-    transition: all 0.35s var(--ease-out);
 }
 .title-word:nth-child(1) { animation-delay: 0.2s; }
 .title-word:nth-child(2) { animation-delay: 0.5s; }
@@ -313,16 +312,6 @@ body::after {
 .title-creature {
     color: var(--red); font-style: italic;
     text-shadow: 0 0 60px color-mix(in srgb, var(--red) 30%, transparent);
-}
-.hero-title:hover .title-word {
-    letter-spacing: 0.06em;
-    transform: scale(1.03);
-    color: var(--butterscotch);
-}
-.hero-title:hover .title-creature {
-    letter-spacing: 0.18em;
-    transform: scale(1.12);
-    text-shadow: 0 0 80px var(--butterscotch), 0 0 120px color-mix(in srgb, var(--butterscotch) 50%, transparent);
 }
 @keyframes riseWord {
     to { opacity: 1; transform: translateY(0); }
@@ -528,11 +517,12 @@ body::after {
 .team { background: var(--bg); }
 .tarots {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-areas:
-        "fox  bird owl"
-        "fox  cat  mouse";
+        "owl   owl"
+        "fox   bird"
+        "fox   cat"
+        "mouse mouse";
     gap: 1.5rem; padding: 0 2.5rem 6rem;
 }
 .tarot[data-beast="fox"] { grid-area: fox; }
@@ -567,11 +557,12 @@ body::after {
 .br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
 .tarot-img {
-    width: 100%; height: 280px; overflow: hidden; position: relative;
+    width: 100%; height: 220px; overflow: hidden; position: relative;
 }
-.tarot[data-beast="fox"] .tarot-img { height: 360px; }
-.tarot[data-beast="bird"] .tarot-img, .tarot[data-beast="cat"] .tarot-img,
-.tarot[data-beast="owl"] .tarot-img, .tarot[data-beast="mouse"] .tarot-img { height: 160px; }
+.tarot[data-beast="fox"] .tarot-img { height: 100%; min-height: 380px; }
+.tarot[data-beast="owl"] .tarot-img { height: 220px; }
+.tarot[data-beast="mouse"] .tarot-img { height: 220px; }
+.tarot[data-beast="bird"] .tarot-img, .tarot[data-beast="cat"] .tarot-img { height: 160px; }
 .tarot-img img {
     width: 100%; height: 100%; object-fit: cover;
     filter: grayscale(40%) contrast(1.1);
@@ -795,14 +786,6 @@ body::after {
         animation: none !important;
     }
     .reveal { animation: none; opacity: 1; transform: none; filter: none; }
-    .hero-title:hover .title-word {
-        letter-spacing: -2px !important; transform: translateY(0) !important;
-        color: inherit !important;
-    }
-    .hero-title:hover .title-creature {
-        color: var(--red) !important;
-        text-shadow: 0 0 60px color-mix(in srgb, var(--red) 30%, transparent) !important;
-    }
 }
 
 ::view-transition-old(root) {
