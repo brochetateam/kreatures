@@ -91,7 +91,7 @@ body {
 .nav-toggle.active span:last-child { transform: rotate(-45deg) translate(5px, -5px); }
 
 .mobile-menu {
-    display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+    display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 50vh;
     background: var(--bg-deep); z-index: 999; padding: 6rem 2rem 2rem;
     transition: right 0.4s var(--ease-out); border-left: 1px solid var(--red-dim);
 }
@@ -546,7 +546,7 @@ body {
     .mobile-menu { display: block; }
     .mobile-link { font-size: 1rem; }
     .section-label { padding: 0 1.5rem; padding-top: 4rem; font-size: 0.75rem; }
-    .hero { padding: 9rem 1.5rem 4rem; gap: 1.5rem; }
+    .hero { padding: 1rem 1.5rem 4rem; gap: 1.5rem; }
     .hero-circle { width: min(80vmin, 380px); height: min(80vmin, 380px); margin: 0 auto; }
     .hero-text { text-align: center; }
     .hero-sub { font-size: 1rem; }
@@ -573,7 +573,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero { padding: 7rem 1.25rem 3rem; gap: 1rem; }
+    .hero { padding: 5.5rem 1.25rem 3rem; gap: 1rem; }
     .hero-circle { width: min(85vmin, 320px); height: min(85vmin, 320px); }
     .title-word { font-size: clamp(2.5rem, 14vw, 4rem); }
     .hero-sub { font-size: 0.95rem; }
