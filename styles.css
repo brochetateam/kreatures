@@ -652,6 +652,24 @@ body::after {
 .field select { cursor: pointer; appearance: none; }
 .field select option { background: var(--bg); color: var(--cream); }
 
+.field:has(input:invalid:not(:placeholder-shown)) input,
+.field:has(textarea:invalid:not(:placeholder-shown)) textarea {
+    border-color: var(--red);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--red) 8%, transparent);
+}
+.field:has(:valid:not(:placeholder-shown)) input,
+.field:has(:valid:not(:placeholder-shown)) textarea,
+.field:has(select:valid) select {
+    border-color: var(--butterscotch);
+}
+.contact-form:not(:has(:invalid)) .ritual-btn {
+    border-color: var(--butterscotch);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--butterscotch) 20%, transparent);
+}
+.contact-form:not(:has(:invalid)) .ritual-btn:hover {
+    box-shadow: 0 0 50px color-mix(in srgb, var(--butterscotch) 30%, transparent);
+}
+
 .ritual-btn {
     position: relative; display: flex; align-items: center; justify-content: center;
     gap: 1rem; padding: 1.25rem; background: transparent; border: 1px solid var(--red);
