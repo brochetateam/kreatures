@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>OG Image Generator</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0d1b2a; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: system-ui; gap: 1.5rem; padding: 2rem; }
+h1 { color: #EAE2B7; font: 700 1.3rem 'Playfair Display', Georgia, serif; letter-spacing: 2px; }
+.preview-wrap { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+.preview { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+canvas { border: 2px solid #333; border-radius: 8px; max-width: 100%; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+canvas.desk { width: 600px; }
+canvas.mob { width: 200px; }
+button { padding: 0.8rem 2rem; font-size: 0.9rem; background: #D62828; color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; letter-spacing: 1px; }
+button:hover { background: #b01e1e; }
+.label { color: #888; font-size: 0.8rem; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<h1>OG Image Generator</h1>
+<div class="preview-wrap">
+  <div class="preview">
+    <canvas id="ogDesk" width="1200" height="630" class="desk"></canvas>
+    <button onclick="download('desk')">Descargar 1200×630</button>
+    <span class="label">Escritorio / WhatsApp</span>
+  </div>
+  <div class="preview">
+    <canvas id="ogMob" width="600" height="600" class="mob"></canvas>
+    <button onclick="download('mob')">Descargar 600×600</button>
+    <span class="label">Móvil / Cuadrado</span>
+  </div>
+</div>
+<script>
+function drawCanvas(id, W, H) {
+    const c = document.getElementById(id);
+    const ctx = c.getContext('2d');
+    const isDesk = W > H;
+
+    // Fondo
+    const grad = ctx.createRadialGradient(W*0.4, H*0.5, 0, W*0.4, H*0.5, W*0.6);
+    grad.addColorStop(0, '#00263b');
+    grad.addColorStop(0.5, '#001a2e');
+    grad.addColorStop(1, '#000d17');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(234,226,183,0.05)';
+    ctx.lineWidth = 1;
+    const step = isDesk ? 40 : 30;
+    for (let x = 0; x < W; x += step) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += step) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Círculo central con anillos
+    const cx = isDesk ? W*0.3 : W*0.5;
+    const cy = H*0.5;
+    const r = isDesk ? 140 : 120;
+    const colors = ['rgba(214,40,40,0.08)', 'rgba(247,127,0,0.06)', 'rgba(252,196,73,0.05)', 'rgba(214,40,40,0.04)'];
+    for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, r + i * 20, 0, Math.PI * 2);
+        ctx.strokeStyle = colors[i];
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+    }
+
+    // Glow del círculo
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, r+60);
+    glow.addColorStop(0, 'rgba(214,40,40,0.08)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r+60, 0, Math.PI*2);
+    ctx.fill();
+
+    // Criaturas alrededor del círculo (tres puntos)
+    const creatures = [
+        { angle: -0.4, color: '#F77F00', label: 'CODE' },
+        { angle: 0, color: '#FCBF49', label: 'ART' },
+        { angle: 0.4, color: '#D62828', label: 'ANIM' }
+    ];
+    creatures.forEach((cr, i) => {
+        const a = Math.PI/2 + cr.angle;
+        const dist = r + 8;
+        const px = cx + Math.cos(a) * dist;
+        const py = cy + Math.sin(a) * dist;
+
+        // Círculo criatura
+        ctx.beginPath();
+        ctx.arc(px, py, 16, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(0,13,23,0.8)';
+        ctx.fill();
+        ctx.strokeStyle = cr.color;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Inicial de la criatura
+        ctx.fillStyle = cr.color;
+        ctx.font = 'bold 14px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(cr.label[0], px, py+1);
+
+        // Label debajo
+        ctx.fillStyle = 'rgba(234,226,183,0.5)';
+        ctx.font = isDesk ? '11px "Space Mono", monospace' : '9px monospace';
+        ctx.textBaseline = 'top';
+        ctx.fillText(cr.label, px, py + 22);
+    });
+
+    // Línea decorativa
+    const lineX = isDesk ? W*0.52 : W*0.08;
+    ctx.strokeStyle = '#D62828';
+    ctx.lineWidth = 2;
+    const lineY = isDesk ? H*0.38 : H*0.32;
+    ctx.shadowColor = '#D62828';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.moveTo(lineX, lineY);
+    ctx.lineTo(isDesk ? W*0.88 : W*0.92, lineY);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Título "WE ARE KREATURES"
+    const titleY = isDesk ? H*0.3 : H*0.25;
+    const titleSize = isDesk ? 64 : 36;
+    const subSize = isDesk ? 22 : 14;
+
+    ctx.textBaseline = 'middle';
+
+    // WE
+    ctx.fillStyle = '#EAE2B7';
+    ctx.font = `900 ${titleSize}px "Playfair Display", Georgia, serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText('WE', lineX, titleY);
+
+    // ARE
+    ctx.fillText('ARE', lineX, titleY + titleSize*0.9);
+
+    // KREATURES (en rojo)
+    ctx.fillStyle = '#D62828';
+    ctx.shadowColor = '#D62828';
+    ctx.shadowBlur = 30;
+    ctx.fillText('KREATURES', lineX, titleY + titleSize*1.8);
+    ctx.shadowBlur = 0;
+
+    // Tagline
+    ctx.fillStyle = '#F77F00';
+    ctx.font = `400 ${subSize}px "Space Mono", monospace`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    const tagY = isDesk ? H*0.52 : H*0.55;
+    ctx.fillText('THE CREATURES BEHIND YOUR GAME', lineX, tagY);
+
+    // Dominios
+    ctx.fillStyle = 'rgba(234,226,183,0.3)';
+    ctx.font = isDesk ? '16px "Space Mono", monospace' : '11px monospace';
+    ctx.textBaseline = 'middle';
+    const domY = isDesk ? H*0.6 : H*0.64;
+    ctx.fillText('◈  CODE  ◈  ART  ◈  ANIMATION', lineX, domY);
+
+    // Footer
+    ctx.fillStyle = 'rgba(234,226,183,0.15)';
+    ctx.font = isDesk ? '12px "Space Mono", monospace' : '9px monospace';
+    ctx.textBaseline = 'bottom';
+    ctx.textAlign = isDesk ? 'right' : 'center';
+    ctx.fillText('kreatures-studio.github.io/website', isDesk ? W-30 : W/2, isDesk ? H-20 : H-15);
+}
+
+drawCanvas('ogDesk', 1200, 630);
+drawCanvas('ogMob', 600, 600);
+
+function download(type) {
+    const id = type === 'desk' ? 'ogDesk' : 'ogMob';
+    const c = document.getElementById(id);
+    const link = document.createElement('a');
+    link.download = type === 'desk' ? 'og-image-1200x630.png' : 'og-image-600x600.png';
+    link.href = c.toDataURL('image/png');
+    link.click();
+}
+</script>
+</body>
+</html>
