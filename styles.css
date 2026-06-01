@@ -712,7 +712,7 @@ body::after {
     .hero-scroll { display: none; }
     .divisions-container { grid-template-columns: 1fr; }
     .tarots { grid-template-columns: 1fr; grid-template-areas: none; max-width: 400px; margin: 0 auto; }
-    .tarot { grid-area: auto; }
+    .tarot[data-beast] { grid-area: auto; }
     .contact-dual { grid-template-columns: 1fr; }
     .contact-circle { max-width: 300px; }
 }
