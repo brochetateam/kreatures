@@ -544,23 +544,44 @@ body {
     .nav-links { display: none; }
     .nav-toggle { display: flex; cursor: pointer; }
     .mobile-menu { display: block; }
-    .section-label { padding: 0 1.5rem; padding-top: 4rem; }
+    .mobile-link { font-size: 0.9rem; }
+    .section-label { padding: 0 1.5rem; padding-top: 4rem; font-size: 0.65rem; }
     .hero { padding: 9rem 1.5rem 4rem; gap: 1.5rem; }
     .hero-circle { width: min(80vmin, 380px); height: min(80vmin, 380px); margin: 0 auto; }
     .hero-text { text-align: center; }
+    .hero-sub { font-size: 0.9rem; }
+    .hero-cta { font-size: 0.8rem; }
+    .domain-title { font-size: 1.8rem; }
+    .domain-desc { font-size: 0.8rem; }
+    .domain-skills li { font-size: 0.7rem; }
+    .domain-code { font-size: 0.75rem; }
+    .tarot-body h3 { font-size: 1.5rem; }
+    .tarot-role { font-size: 0.6rem; }
+    .tstat-label { font-size: 0.6rem; }
+    .tarot-num { font-size: 0.7rem; }
+    .field label { font-size: 0.6rem; }
+    .field input, .field select, .field textarea { font-size: 0.9rem; }
+    .ritual-btn { font-size: 0.8rem; }
+    .contact-info p { font-size: 0.7rem; }
     .divisions-container { padding: 0 1.5rem 3rem; }
     .tarots { padding: 0 1.5rem 4rem; }
     .contact-dual { padding: 0 1.5rem; gap: 2rem; }
     .skip { padding: 0.75rem 1.5rem; }
     .skip-pages { display: none; }
     .footer { padding: 1.5rem; }
+    .footer p { font-size: 0.65rem; }
 }
 
 @media (max-width: 480px) {
     .hero { padding: 7rem 1.25rem 3rem; gap: 1rem; }
     .hero-circle { width: min(85vmin, 320px); height: min(85vmin, 320px); }
     .title-word { font-size: clamp(2.5rem, 14vw, 4rem); }
-    .hero-sub { font-size: 0.75rem; }
+    .hero-sub { font-size: 0.85rem; }
+    .hero-cta { font-size: 0.75rem; }
+    .domain-title { font-size: 1.6rem; }
+    .domain-desc { font-size: 0.75rem; }
+    .domain-code { font-size: 0.7rem; }
+    .tarot-body h3 { font-size: 1.3rem; }
     .beast { width: 22%; height: 22%; }
     .hero-eye { width: 16vmin; height: 16vmin; }
     .tarot-img { height: 220px; }
