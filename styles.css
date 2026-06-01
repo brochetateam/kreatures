@@ -161,6 +161,17 @@ body {
 .mobile-themes .theme-dot { width: 24px; height: 24px; }
 
 .section { min-height: 100vh; position: relative; z-index: 1; }
+
+.reveal {
+    animation: revealFadeUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+}
+@keyframes revealFadeUp {
+    from { opacity: 0; transform: translateY(40px); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
 .section-label {
     display: flex; align-items: center; gap: 0.75rem;
     font-size: 0.65rem; letter-spacing: 4px; color: var(--red);
@@ -723,10 +734,12 @@ body {
     .ring-outer { animation: ringSpinOuter 40s linear infinite; }
     .ring-mid { animation: ringSpinMid 25s linear infinite; }
     .ring-inner { animation: ringSpinInner 15s linear infinite; }
+    .reveal { opacity: 1; transform: none; filter: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .ring-outer, .ring-mid, .ring-inner {
         animation: none !important;
     }
+    .reveal { animation: none; opacity: 1; transform: none; filter: none; }
 }
