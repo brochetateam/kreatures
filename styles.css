@@ -777,3 +777,14 @@ body::after {
     .title-word { letter-spacing: -2px !important; transform: scale(1) !important; color: inherit !important; }
     .title-creature { color: var(--red) !important; }
 }
+
+::view-transition-old(root) {
+    animation: 0.35s ease-out both;
+    animation-name: vtFadeOut;
+}
+::view-transition-new(root) {
+    animation: 0.4s ease-out both;
+    animation-name: vtFadeIn;
+}
+@keyframes vtFadeOut { to { opacity: 0; transform: scale(0.96); filter: blur(4px); } }
+@keyframes vtFadeIn { from { opacity: 0; transform: scale(1.04); filter: blur(4px); } }

@@ -26,9 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const themes = ['bestiary', 'cinder', 'depths', 'solar', 'pale'];
     function setTheme(name) {
-        document.documentElement.setAttribute('data-theme', name);
-        localStorage.setItem('kreatures-theme', name);
-        document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === name));
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                document.documentElement.setAttribute('data-theme', name);
+                localStorage.setItem('kreatures-theme', name);
+                document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === name));
+            });
+        } else {
+            document.documentElement.setAttribute('data-theme', name);
+            localStorage.setItem('kreatures-theme', name);
+            document.querySelectorAll('.theme-dot').forEach(d => d.classList.toggle('active', d.dataset.theme === name));
+        }
     }
     function initTheme() {
         const saved = localStorage.getItem('kreatures-theme');
