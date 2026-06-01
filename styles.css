@@ -282,8 +282,20 @@ body {
     gap: 1px; padding: 0 2.5rem 4rem;
 }
 
-.domain {
-    background: var(--bg); padding: 2.5rem 2rem;
+.domain[data-domain="code"] {
+    background: var(--bg); padding: 2rem;
+    border: 1px solid var(--cream-dim);
+    position: relative; overflow: hidden;
+    transition: all 0.4s var(--ease);
+}
+.domain[data-domain="art"] {
+    background: var(--bg); padding: 2rem;
+    border: 1px solid var(--cream-dim);
+    position: relative; overflow: hidden;
+    transition: all 0.4s var(--ease);
+}
+.domain[data-domain="anim"] {
+    background: var(--bg); padding: 2rem;
     border: 1px solid var(--cream-dim);
     position: relative; overflow: hidden;
     transition: all 0.4s var(--ease);
@@ -337,18 +349,18 @@ body {
 
 .domain-code {
     background: var(--bg-deep); border: 1px solid var(--orange-dim);
-    padding: 1rem; position: relative;
-    min-height: 120px; transition: min-height 0.6s var(--ease-out);
+    position: relative; height: 160px; overflow: hidden;
 }
 
 .code-stage {
-    position: relative; width: 100%; min-height: 80px;
+    position: relative; width: 100%;
 }
 
 .code-typer {
     margin: 0; font-size: 0.75rem; line-height: 1.8;
-    color: var(--orange); overflow: hidden;
+    color: var(--orange); overflow-y: auto;
     transition: opacity 0.5s var(--ease);
+    max-height: 160px;
 }
 .code-typer code { font-family: var(--font-mono); }
 
@@ -359,7 +371,7 @@ body {
 @keyframes cursorBlink { 50% { opacity: 0; } }
 
 .domain-canvas {
-    width: 100%; height: 220px; display: block;
+    width: 100%; height: 160px; display: block;
     background: var(--bg-deep);
     border: none;
 }
@@ -369,36 +381,52 @@ body {
 }
 
 .domain-canvas-wrap {
-    width: 100%; height: 220px;
+    width: 100%; height: 160px;
     border: 1px solid var(--butterscotch-dim); position: relative;
     overflow: hidden;
 }
 
+.domain[data-domain="code"] .code-stage {
+    position: relative; height: 100%; overflow: hidden;
+}
+.domain[data-domain="code"] .code-typer {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    margin: 0;
+}
+.domain[data-domain="code"] .domain-canvas {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+}
+.fade-out {
+    opacity: 0; pointer-events: none;
+}
+
 .domain[data-domain="art"] .domain-canvas-wrap {
     border-color: var(--butterscotch-dim);
+    height: 160px;
+}
+.domain[data-domain="art"] .domain-canvas {
+    height: 160px;
 }
 
 .domain[data-domain="anim"] .domain-canvas-wrap {
     border-color: var(--red-dim);
-    height: 200px;
+    height: 160px;
 }
 .domain[data-domain="anim"] .domain-canvas {
-    height: 180px;
+    height: 160px;
 }
 
 .domain-status {
-    display: block; font-size: 0.55rem; color: var(--cream-dim);
-    letter-spacing: 2px; margin-top: 0.5rem;
+    position: absolute; bottom: 4px; left: 8px;
+    font-size: 0.55rem; color: var(--cream-dim);
+    letter-spacing: 2px;
     transition: color 0.3s var(--ease);
 }
-.domain-status.active { color: var(--orange); }
+.domain-status.active { color: var(--orange); animation: blinkStatus 1.2s step-end infinite; }
 .domain[data-domain="code"] .domain-status.active { color: var(--orange); }
 .domain[data-domain="art"] .domain-status.active { color: var(--butterscotch); }
 .domain[data-domain="anim"] .domain-status.active { color: var(--red); }
-
-.code-stage .domain-canvas {
-    margin-top: 0.5rem;
-}
+@keyframes blinkStatus { 50% { opacity: 0.3; } }
 
 .team { background: var(--bg); }
 .tarots {

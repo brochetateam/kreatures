@@ -293,8 +293,8 @@ function initSnake() {
 
     const code = [
         'function SnakeGame() {',
-        '  let snake = [{x:10,y:10}];',
-        '  let food = {x:15,y:15};',
+        '  let snake = [{x:6,y:4}];',
+        '  let food = {x:8,y:4};',
         '  let dir = {x:1,y:0};',
         '  ',
         '  function update() {',
@@ -302,7 +302,7 @@ function initSnake() {
         '    let nx = h.x + dir.x;',
         '    let ny = h.y + dir.y;',
         '    if (nx===food.x&&ny===food.y){',
-        '      food={x:rand(20),y:rand(15)};',
+        '      food={x:rand(12),y:rand(8)};',
         '    } else { snake.pop(); }',
         '    snake.unshift({x:nx,y:ny});',
         '  }',
@@ -311,6 +311,7 @@ function initSnake() {
 
     let typed = '', idx = 0;
     let cursorVisible = true;
+    let gameCount = 0;
     const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && idx < code.length) {
             typeNext();
@@ -328,6 +329,7 @@ function initSnake() {
         }
         typed += code[idx];
         codeEl.textContent = typed;
+        codeEl.parentElement.scrollTop = codeEl.parentElement.scrollHeight;
         idx++;
         const delay = code[idx - 1] === '\n' ? 60 : Math.random() * 25 + 15;
         setTimeout(typeNext, delay);
@@ -338,16 +340,18 @@ function initSnake() {
         snakeCanvas.classList.remove('hidden');
         requestAnimationFrame(() => {
         snakeCanvas.width = snakeCanvas.clientWidth;
-        snakeCanvas.height = 200;
+        snakeCanvas.height = 160;
         codeStatus.textContent = '▸ running...';
 
         const ctx = snakeCanvas.getContext('2d');
-        const COLS = 20, ROWS = 15, CELL = 10;
-        let snake = [{x: 10, y: 10}];
-        let food = {x: 15, y: 15};
+        const COLS = Math.floor(snakeCanvas.width / 20), ROWS = 8;
+        const CELL = Math.floor(snakeCanvas.width / COLS);
+        let snake = [{x: 6, y: 4}];
+        let food = {x: 8, y: 4};
         let dir = {x: 1, y: 0};
         let gameOver = false;
         let score = 0;
+        let moveCount = 0;
 
         function rand(n) { return Math.floor(Math.random() * n); }
 
@@ -360,6 +364,13 @@ function initSnake() {
 
         function update() {
             if (gameOver) return;
+            moveCount++;
+            if (moveCount > 200) {
+                gameOver = true;
+                codeStatus.textContent = '▸ game over · restarting...';
+                setTimeout(reset, 1500);
+                return;
+            }
             let head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
             if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS ||
                 snake.some(s => s.x === head.x && s.y === head.y)) {
@@ -430,21 +441,37 @@ function initSnake() {
         }
 
         function reset() {
-            snake = [{x: 10, y: 10}];
-            food = {x: 15, y: 15};
+            snake = [{x: 6, y: 4}];
+            food = {x: 8, y: 4};
             dir = {x: 1, y: 0};
             gameOver = false;
             score = 0;
+            moveCount = 0;
+            gameCount++;
+            if (gameCount >= 1) {
+                gameCount = 0;
+                snakeCanvas.classList.add('hidden');
+                pre.classList.remove('fade-out');
+                typed = '';
+                idx = 0;
+                codeEl.textContent = '';
+                codeStatus.textContent = '▸ booting...';
+                codeStatus.classList.remove('active');
+                typeNext();
+                return;
+            }
             codeStatus.textContent = '▸ running...';
         }
 
         let frame = 0;
+        let loopTimer = null;
         function loop() {
+            if (gameOver && snakeCanvas.classList.contains('hidden')) return;
             aiDir();
-            if (frame % 8 === 0) update();
+            if (frame % 4 === 0) update();
             draw();
             frame++;
-            setTimeout(loop, 50);
+            loopTimer = setTimeout(loop, 40);
         }
         loop();
         });
@@ -469,16 +496,18 @@ function initArt() {
     let progress = 0;
     let branches = [];
     let ctx;
+    let inkFrames = 0;
 
     function startArt() {
         canvas.width = canvas.clientWidth;
-        canvas.height = 220;
+        canvas.height = 160;
         ctx = canvas.getContext('2d');
         status.textContent = '▸ sketching...';
         status.classList.add('active');
         phase = 0;
         progress = 0;
         branches = [];
+        inkFrames = 0;
         animateArt();
     }
 
@@ -607,7 +636,17 @@ function initArt() {
             if (progress >= totalSteps) {
                 progress = totalSteps - 1;
                 phase = 1;
+                inkFrames = 0;
                 status.textContent = '▸ inking...';
+            }
+        } else {
+            inkFrames++;
+            if (inkFrames > 180) {
+                progress = 0;
+                phase = 0;
+                inkFrames = 0;
+                branches = [];
+                status.textContent = '▸ sketching...';
             }
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -640,8 +679,6 @@ function initAnim() {
     let phase = 0;
     let morphT = 0;
     let morphCycle = 0;
-    let ball = { x: 0, y: 0, vy: 0, vx: 2 };
-    let particles = [];
     let ctx;
 
     const shapes = [
@@ -684,13 +721,11 @@ function initAnim() {
 
     function startAnim() {
         canvas.width = canvas.clientWidth;
-        canvas.height = 180;
+        canvas.height = 160;
         ctx = canvas.getContext('2d');
         status.textContent = '▸ morphing...';
         status.classList.add('active');
         phase = 0; morphT = 0; morphCycle = 0;
-        ball.x = 40; ball.y = 30; ball.vy = 0; ball.vx = 2;
-        particles = [];
         animateAnim();
     }
 
@@ -746,31 +781,10 @@ function initAnim() {
     }
 
     function cycle() {
-        if (phase === 0) {
-            morphT += 0.008;
-            if (morphT >= 1) {
-                morphT = 0;
-                morphCycle++;
-                if (morphCycle >= 6) {
-                    phase = 1;
-                    status.textContent = '▸ bouncing...';
-                }
-            }
-        }
-        if (phase === 1) {
-            const gravity = 0.3;
-            ball.vy += gravity;
-            ball.y += ball.vy;
-            ball.x += ball.vx;
-            if (ball.y > canvas.height - 20) {
-                ball.y = canvas.height - 20;
-                ball.vy *= -0.65;
-                if (Math.abs(ball.vy) < 0.5) ball.vy = 0;
-                for (let i = 0; i < 5; i++) spawnParticle(ball.x, ball.y);
-            }
-            if (ball.x > canvas.width - 20 || ball.x < 20) ball.vx *= -1;
-            if (Math.abs(ball.vy) < 0.3 && ball.y >= canvas.height - 22) ball.vy = -3;
-            if (Math.random() < 0.1) spawnParticle(ball.x, ball.y);
+        morphT += 0.02;
+        if (morphT >= 1) {
+            morphT = 0;
+            morphCycle = (morphCycle + 1) % 6;
         }
     }
 
@@ -778,44 +792,16 @@ function initAnim() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#000d17';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        if (phase === 0) {
-            const s1 = morphCycle % 3;
-            const s2 = (s1 + 1) % 3;
-            const verts = lerpVerts(shapes[s1].verts, shapes[s2].verts, morphT);
-            const color = lerpColor(shapes[s1].color, shapes[s2].color, morphT);
-            drawShape(verts, color, 'rgba(255,200,100,0.15)');
-            const names = ['Fox','Bird','Cat'];
-            ctx.fillStyle = 'rgba(234,226,183,0.5)';
-            ctx.font = '9px Space Mono';
-            ctx.textAlign = 'center';
-            ctx.fillText(names[s1] + ' → ' + names[s2], canvas.width / 2, 20);
-        }
-        if (phase === 1) {
-            ctx.fillStyle = '#D62828';
-            ctx.shadowColor = '#D62828';
-            ctx.shadowBlur = 15;
-            ctx.beginPath();
-            ctx.arc(ball.x, ball.y, 8, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            const cycleHue = Math.floor((Date.now() / 200) % 3);
-            const colors = ['#F77F00', '#FCBF49', '#D62828'];
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
-                p.vy += 0.05;
-                p.life -= 0.02;
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = colors[Math.floor((i + cycleHue) % 3)];
-                ctx.shadowColor = colors[Math.floor((i + cycleHue) % 3)];
-                ctx.shadowBlur = 5;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-            ctx.shadowBlur = 0;
-            particles = particles.filter(p => p.life > 0);
-        }
+        const s1 = Math.floor(morphCycle / 2) % 3;
+        const s2 = (s1 + 1) % 3;
+        const verts = lerpVerts(shapes[s1].verts, shapes[s2].verts, morphT);
+        const color = lerpColor(shapes[s1].color, shapes[s2].color, morphT);
+        drawShape(verts, color, 'rgba(255,200,100,0.15)');
+        const names = ['Fox','Bird','Cat'];
+        ctx.fillStyle = 'rgba(234,226,183,0.5)';
+        ctx.font = '9px Space Mono';
+        ctx.textAlign = 'center';
+        ctx.fillText(names[s1] + ' → ' + names[s2], canvas.width / 2, 20);
     }
 
     function animateAnim() {
