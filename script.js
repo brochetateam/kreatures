@@ -46,7 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     initTheme();
     document.querySelectorAll('.theme-dot').forEach(dot => {
-        dot.addEventListener('click', () => setTheme(dot.dataset.theme));
+        dot.addEventListener('click', () => {
+            setTheme(dot.dataset.theme);
+            if (navToggle && mobileMenu) {
+                navToggle.classList.remove('active');
+                mobileMenu.classList.remove('open');
+            }
+        });
     });
 
     let mouseX = 0, mouseY = 0;
