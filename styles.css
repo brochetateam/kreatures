@@ -711,7 +711,8 @@ body::after {
     .hero-line { margin-left: auto; margin-right: auto; }
     .hero-scroll { display: none; }
     .divisions-container { grid-template-columns: 1fr; }
-    .tarots { grid-template-columns: 1fr; grid-template-areas: initial; max-width: 400px; margin: 0 auto; }
+    .tarots { grid-template-columns: 1fr; grid-template-areas: none; max-width: 400px; margin: 0 auto; }
+    .tarot { grid-area: auto; }
     .contact-dual { grid-template-columns: 1fr; }
     .contact-circle { max-width: 300px; }
 }
