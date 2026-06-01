@@ -63,15 +63,15 @@ body {
 .nav-sigil { font-size: 1.2rem; color: var(--red); animation: sigilSpin 8s linear infinite; }
 @keyframes sigilSpin { to { transform: rotate(360deg); } }
 
-.nav-name { font-size: 0.85rem; font-weight: 700; letter-spacing: 4px; }
+.nav-name { font-size: 0.95rem; font-weight: 700; letter-spacing: 4px; }
 
 .nav-links { display: flex; gap: 2.5rem; }
 .nav-link {
-    text-decoration: none; color: var(--cream); font-size: 0.6rem;
+    text-decoration: none; color: var(--cream); font-size: 0.7rem;
     letter-spacing: 2px; display: flex; align-items: center; gap: 0.5rem;
     transition: color 0.3s var(--ease); position: relative;
 }
-.link-num { color: var(--red); font-size: 0.5rem; }
+.link-num { color: var(--red); font-size: 0.6rem; }
 .nav-link::after {
     content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
     height: 1px; background: var(--red); transition: width 0.3s var(--ease);
@@ -98,16 +98,16 @@ body {
 .mobile-menu.open { right: 0; }
 .mobile-link {
     display: block; padding: 1rem 0; color: var(--cream); text-decoration: none;
-    font-size: 0.75rem; letter-spacing: 3px; border-bottom: 1px solid var(--cream-dim);
+    font-size: 0.85rem; letter-spacing: 3px; border-bottom: 1px solid var(--cream-dim);
 }
 
 .section { min-height: 100vh; position: relative; z-index: 1; }
 .section-label {
     display: flex; align-items: center; gap: 0.75rem;
-    font-size: 0.55rem; letter-spacing: 4px; color: var(--red);
+    font-size: 0.65rem; letter-spacing: 4px; color: var(--red);
     margin-bottom: 3rem; padding: 0 2.5rem; padding-top: 6rem;
 }
-.label-sigil { font-size: 0.7rem; animation: sigilSpin 12s linear infinite; }
+.label-sigil { font-size: 0.8rem; animation: sigilSpin 12s linear infinite; }
 
 .hero {
     min-height: 100vh; display: flex; align-items: center; gap: 2rem;
@@ -241,14 +241,14 @@ body {
 @keyframes lineGrow { to { transform: scaleX(1); } }
 
 .hero-sub {
-    font-size: 1rem; color: var(--cream); letter-spacing: 3px;
+    font-size: 1.1rem; color: var(--cream); letter-spacing: 3px;
     margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s var(--ease) 1.2s forwards;
 }
 
 .hero-cta {
     display: inline-flex; align-items: center; gap: 0.75rem;
     padding: 1rem 2rem; border: 1px solid var(--cream);
-    color: var(--cream); text-decoration: none; font-size: 0.7rem;
+    color: var(--cream); text-decoration: none; font-size: 0.8rem;
     letter-spacing: 3px; transition: all 0.3s var(--ease);
     opacity: 0; animation: fadeUp 0.6s var(--ease) 1.4s forwards;
 }
@@ -266,7 +266,7 @@ body {
     z-index: 5; display: flex; flex-direction: column; align-items: center;
     gap: 0.5rem; opacity: 0; animation: fadeUp 0.6s var(--ease) 2s forwards;
 }
-.scroll-text { font-size: 0.45rem; letter-spacing: 3px; color: var(--cream-dim); }
+.scroll-text { font-size: 0.55rem; letter-spacing: 3px; color: var(--cream-dim); }
 .scroll-line {
     width: 1px; height: 30px; background: var(--cream-dim);
     animation: scrollLine 2s ease-in-out infinite;
@@ -320,24 +320,24 @@ body {
 .cocoon-creature img { width: 100%; height: 100%; object-fit: cover; }
 
 .domain-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1rem; }
-.domain-num { font-size: 0.5rem; color: var(--domain-color); letter-spacing: 2px; }
+.domain-num { font-size: 0.6rem; color: var(--domain-color); letter-spacing: 2px; }
 .domain-title {
-    font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+    font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
     letter-spacing: -0.5px;
 }
 
-.domain-desc { font-size: 0.7rem; color: var(--cream); opacity: 0.7; margin-bottom: 1.5rem; line-height: 1.7; }
+.domain-desc { font-size: 0.8rem; color: var(--cream); opacity: 0.7; margin-bottom: 1.5rem; line-height: 1.7; }
 
 .domain-skills { list-style: none; margin-bottom: 1.5rem; }
 .domain-skills li {
-    font-size: 0.6rem; color: var(--butterscotch); padding: 0.4rem 0;
+    font-size: 0.7rem; color: var(--butterscotch); padding: 0.4rem 0;
     border-bottom: 1px solid var(--cream-dim); letter-spacing: 1px;
 }
 .domain-skills li::before { content: '▶'; color: var(--domain-color); margin-right: 0.5rem; font-size: 0.4rem; }
 
 .domain-code {
     background: var(--bg-deep); border: 1px solid var(--orange-dim);
-    padding: 1rem; font-size: 0.65rem; line-height: 1.8;
+    padding: 1rem; font-size: 0.75rem; line-height: 1.8;
     color: var(--orange);
 }
 .domain-code code { font-family: var(--font-mono); }
@@ -419,17 +419,17 @@ body {
 
 .tarot-body { padding: 1.5rem; }
 .tarot-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.25rem; }
-.tarot-num { font-size: 0.6rem; color: var(--red); letter-spacing: 2px; }
-.tarot-body h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; }
+.tarot-num { font-size: 0.7rem; color: var(--red); letter-spacing: 2px; }
+.tarot-body h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; }
 .tarot-role {
-    display: block; font-size: 0.5rem; color: var(--cream); opacity: 0.5;
+    display: block; font-size: 0.6rem; color: var(--cream); opacity: 0.5;
     letter-spacing: 3px; margin-bottom: 1.5rem;
 }
 
 .tarot-stats { display: flex; flex-direction: column; gap: 0.6rem; }
 .tstat { display: flex; align-items: center; gap: 0.75rem; }
 .tstat-label {
-    font-size: 0.5rem; color: var(--cream); opacity: 0.6;
+    font-size: 0.6rem; color: var(--cream); opacity: 0.6;
     letter-spacing: 2px; width: 45px; flex-shrink: 0;
 }
 .tstat-bar { flex: 1; height: 3px; background: var(--cream-dim); }
@@ -468,16 +468,16 @@ body {
     position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
     text-align: center; z-index: 2; white-space: nowrap;
 }
-.contact-info p { font-size: 0.6rem; color: var(--cream); opacity: 0.5; letter-spacing: 2px; line-height: 2; }
+.contact-info p { font-size: 0.7rem; color: var(--cream); opacity: 0.5; letter-spacing: 2px; line-height: 2; }
 
 .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
 .field { display: flex; flex-direction: column; gap: 0.5rem; }
 .field label {
-    font-size: 0.5rem; letter-spacing: 3px; color: var(--orange);
+    font-size: 0.7rem; letter-spacing: 3px; color: var(--orange);
 }
 .field input, .field select, .field textarea {
     background: var(--bg); border: 1px solid var(--cream-dim);
-    padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem;
+    padding: 1rem; font-family: var(--font-mono); font-size: 1rem;
     color: var(--cream); transition: all 0.3s var(--ease);
 }
 .field input:focus, .field select:focus, .field textarea:focus {
@@ -491,7 +491,7 @@ body {
 .ritual-btn {
     position: relative; display: flex; align-items: center; justify-content: center;
     gap: 1rem; padding: 1.25rem; background: transparent; border: 1px solid var(--red);
-    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px;
+    font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 3px;
     color: var(--cream); cursor: none; transition: all 0.3s var(--ease);
     overflow: hidden;
 }
@@ -507,8 +507,8 @@ body {
     padding: 2rem 2.5rem; display: flex; align-items: center; gap: 1rem;
     border-top: 1px solid var(--cream-dim); position: relative; z-index: 1;
 }
-.footer-sigil { font-size: 0.8rem; color: var(--red); animation: sigilSpin 8s linear infinite; }
-.footer p { font-size: 0.55rem; color: var(--cream); opacity: 0.4; letter-spacing: 2px; }
+.footer-sigil { font-size: 0.9rem; color: var(--red); animation: sigilSpin 8s linear infinite; }
+.footer p { font-size: 0.65rem; color: var(--cream); opacity: 0.4; letter-spacing: 2px; }
 
 .skip {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
@@ -516,13 +516,13 @@ body {
     padding: 0.75rem 2.5rem;
     background: linear-gradient(0deg, var(--bg-deep) 0%, transparent 100%);
 }
-.skip-label { font-size: 0.45rem; letter-spacing: 3px; color: var(--red); }
-.skip-arrow { font-size: 0.6rem; color: var(--red); }
+.skip-label { font-size: 0.55rem; letter-spacing: 3px; color: var(--red); }
+.skip-arrow { font-size: 0.7rem; color: var(--red); }
 .skip-track { flex: 1; max-width: 200px; height: 2px; background: var(--cream-dim); }
 .skip-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--red), var(--orange)); transition: width 0.3s var(--ease); }
 .skip-pages { display: flex; gap: 1.5rem; }
 .skip-pages span {
-    font-size: 0.45rem; letter-spacing: 2px; color: var(--cream-dim);
+    font-size: 0.55rem; letter-spacing: 2px; color: var(--cream-dim);
     cursor: pointer; transition: color 0.3s var(--ease);
 }
 .skip-pages span:hover, .skip-pages span.active { color: var(--red); }
