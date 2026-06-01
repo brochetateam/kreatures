@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tarots = document.querySelectorAll('.tarot');
     const domainLinks = document.querySelectorAll('.nav-link');
     const mobileLinks = document.querySelectorAll('.mobile-link');
+    const magneticBtn = document.querySelector('.hero-cta');
 
     const themes = ['bestiary', 'cinder', 'depths', 'solar', 'pale'];
     function setTheme(name) {
@@ -63,6 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const dy = (mouseY - cy) / rect.height;
             const maxMove = 30;
             pupil.style.transform = `translate(-50%, -50%) translate(${dx * maxMove}px, ${dy * maxMove}px)`;
+        }
+        if (magneticBtn) {
+            const rect = magneticBtn.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = mouseX - cx;
+            const dy = mouseY - cy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const radius = 180;
+            const pull = 0.25;
+            if (dist < radius && dist > 0) {
+                const strength = (1 - dist / radius) * pull;
+                magneticBtn.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+            } else {
+                magneticBtn.style.transform = '';
+            }
         }
         requestAnimationFrame(animateCursor);
     }
