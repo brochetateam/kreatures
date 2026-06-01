@@ -557,6 +557,7 @@ body::after {
 
 .tarot-img {
     width: 100%; height: 160px; overflow: hidden; position: relative;
+    background: var(--bg-deep);
 }
 .tarot[data-beast="owl"] .tarot-img { height: 200px; }
 .tarot[data-beast="mouse"] .tarot-img,
@@ -564,7 +565,7 @@ body::after {
 .tarot[data-beast="cat"] .tarot-img,
 .tarot[data-beast="bird"] .tarot-img { height: 120px; }
 .tarot-img img {
-    width: 100%; height: 100%; object-fit: cover;
+    width: 100%; height: 100%; object-fit: contain;
     filter: grayscale(40%) contrast(1.1);
     transition: all 0.4s var(--ease-out);
 }
