@@ -337,38 +337,67 @@ body {
 
 .domain-code {
     background: var(--bg-deep); border: 1px solid var(--orange-dim);
-    padding: 1rem; font-size: 0.75rem; line-height: 1.8;
-    color: var(--orange);
-}
-.domain-code code { font-family: var(--font-mono); }
-
-.domain-art-grid {
-    width: 100%; height: 60px;
-    border: 1px dashed var(--butterscotch-dim); position: relative;
-    background-image:
-        linear-gradient(var(--butterscotch-dim) 1px, transparent 1px),
-        linear-gradient(90deg, var(--butterscotch-dim) 1px, transparent 1px);
-    background-size: 15px 15px;
+    padding: 1rem; position: relative;
+    min-height: 120px; transition: min-height 0.6s var(--ease-out);
 }
 
-.domain-timeline {
-    width: 100%; height: 40px; background: var(--bg-deep);
-    border: 1px solid var(--red-dim); position: relative;
+.code-stage {
+    position: relative; width: 100%; min-height: 80px;
 }
-.tl-track {
-    position: absolute; top: 50%; left: 10%; right: 10%;
-    height: 2px; background: var(--cream-dim);
-    transform: translateY(-50%);
+
+.code-typer {
+    margin: 0; font-size: 0.75rem; line-height: 1.8;
+    color: var(--orange); overflow: hidden;
+    transition: opacity 0.5s var(--ease);
 }
-.tl-dot {
-    position: absolute; top: 50%; left: 20%; width: 6px; height: 6px;
-    background: var(--red); border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: tlMove 3s ease-in-out infinite;
-    box-shadow: 0 0 10px var(--red);
+.code-typer code { font-family: var(--font-mono); }
+
+.code-cursor {
+    display: inline-block; color: var(--orange);
+    animation: cursorBlink 0.8s step-end infinite;
 }
-@keyframes tlMove {
-    0%, 100% { left: 10%; } 50% { left: 90%; }
+@keyframes cursorBlink { 50% { opacity: 0; } }
+
+.domain-canvas {
+    width: 100%; height: 220px; display: block;
+    background: var(--bg-deep);
+    border: none;
+}
+
+.domain-canvas.hidden {
+    display: none;
+}
+
+.domain-canvas-wrap {
+    width: 100%; height: 220px;
+    border: 1px solid var(--butterscotch-dim); position: relative;
+    overflow: hidden;
+}
+
+.domain[data-domain="art"] .domain-canvas-wrap {
+    border-color: var(--butterscotch-dim);
+}
+
+.domain[data-domain="anim"] .domain-canvas-wrap {
+    border-color: var(--red-dim);
+    height: 200px;
+}
+.domain[data-domain="anim"] .domain-canvas {
+    height: 180px;
+}
+
+.domain-status {
+    display: block; font-size: 0.55rem; color: var(--cream-dim);
+    letter-spacing: 2px; margin-top: 0.5rem;
+    transition: color 0.3s var(--ease);
+}
+.domain-status.active { color: var(--orange); }
+.domain[data-domain="code"] .domain-status.active { color: var(--orange); }
+.domain[data-domain="art"] .domain-status.active { color: var(--butterscotch); }
+.domain[data-domain="anim"] .domain-status.active { color: var(--red); }
+
+.code-stage .domain-canvas {
+    margin-top: 0.5rem;
 }
 
 .team { background: var(--bg); }

@@ -277,4 +277,550 @@ document.addEventListener('DOMContentLoaded', () => {
     const style = document.createElement('style');
     style.textContent = `@media (hover: none) { .cursor-glow { display: none !important; } body { cursor: auto; } * { cursor: auto; } }`;
     document.head.appendChild(style);
+
+    initSnake();
+    initArt();
+    initAnim();
 });
+
+function initSnake() {
+    const codeEl = document.getElementById('codeTyper');
+    const codeStage = document.getElementById('codeStage');
+    const snakeCanvas = document.getElementById('snakeCanvas');
+    const codeStatus = document.getElementById('codeStatus');
+    const pre = codeStage?.querySelector('.code-typer');
+    if (!codeEl || !snakeCanvas || !codeStatus) return;
+
+    const code = [
+        'function SnakeGame() {',
+        '  let snake = [{x:10,y:10}];',
+        '  let food = {x:15,y:15};',
+        '  let dir = {x:1,y:0};',
+        '  ',
+        '  function update() {',
+        '    let h = snake[0];',
+        '    let nx = h.x + dir.x;',
+        '    let ny = h.y + dir.y;',
+        '    if (nx===food.x&&ny===food.y){',
+        '      food={x:rand(20),y:rand(15)};',
+        '    } else { snake.pop(); }',
+        '    snake.unshift({x:nx,y:ny});',
+        '  }',
+        '}'
+    ].join('\n');
+
+    let typed = '', idx = 0;
+    let cursorVisible = true;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && idx < code.length) {
+            typeNext();
+            observer.disconnect();
+        }
+    }, { threshold: 0.3 });
+    observer.observe(codeStage);
+
+    function typeNext() {
+        if (idx >= code.length) {
+            codeStatus.textContent = '▸ execution ready';
+            codeStatus.classList.add('active');
+            setTimeout(startSnake, 800);
+            return;
+        }
+        typed += code[idx];
+        codeEl.textContent = typed;
+        idx++;
+        const delay = code[idx - 1] === '\n' ? 60 : Math.random() * 25 + 15;
+        setTimeout(typeNext, delay);
+    }
+
+    function startSnake() {
+        pre.classList.add('fade-out');
+        snakeCanvas.classList.remove('hidden');
+        requestAnimationFrame(() => {
+        snakeCanvas.width = snakeCanvas.clientWidth;
+        snakeCanvas.height = 200;
+        codeStatus.textContent = '▸ running...';
+
+        const ctx = snakeCanvas.getContext('2d');
+        const COLS = 20, ROWS = 15, CELL = 10;
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 15, y: 15};
+        let dir = {x: 1, y: 0};
+        let gameOver = false;
+        let score = 0;
+
+        function rand(n) { return Math.floor(Math.random() * n); }
+
+        function spawnFood() {
+            let f;
+            do { f = {x: rand(COLS), y: rand(ROWS)}; }
+            while (snake.some(s => s.x === f.x && s.y === f.y));
+            return f;
+        }
+
+        function update() {
+            if (gameOver) return;
+            let head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
+            if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS ||
+                snake.some(s => s.x === head.x && s.y === head.y)) {
+                gameOver = true;
+                codeStatus.textContent = '▸ game over · restarting...';
+                setTimeout(reset, 1500);
+                return;
+            }
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                food = spawnFood();
+            } else {
+                snake.pop();
+            }
+            snake.unshift(head);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#0a1628';
+            ctx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+            ctx.fillStyle = 'rgba(247,127,0,0.08)';
+            for (let x = 0; x < COLS; x++)
+                for (let y = 0; y < ROWS; y++)
+                    if ((x + y) % 2 === 0) ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
+            snake.forEach((s, i) => {
+                ctx.fillStyle = i === 0 ? '#F77F00' : '#E68A2E';
+                ctx.shadowColor = '#F77F00';
+                ctx.shadowBlur = i === 0 ? 8 : 3;
+                ctx.fillRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
+            });
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#D62828';
+            ctx.shadowColor = '#D62828';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#EAE2B7';
+            ctx.font = '8px Space Mono';
+            ctx.fillText('SCORE:' + score, 4, 10);
+        }
+
+        function aiDir() {
+            const h = snake[0];
+            const dx = food.x - h.x;
+            const dy = food.y - h.y;
+            const poss = [];
+            if (dx > 0) poss.push({x: 1, y: 0});
+            if (dx < 0) poss.push({x: -1, y: 0});
+            if (dy > 0) poss.push({x: 0, y: 1});
+            if (dy < 0) poss.push({x: 0, y: -1});
+            const safe = poss.filter(d => {
+                const nx = h.x + d.x, ny = h.y + d.y;
+                return !(nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS ||
+                    snake.some(s => s.x === nx && s.y === ny));
+            });
+            if (safe.length > 0) dir = safe[0];
+            else {
+                const fallback = [{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
+                const f = fallback.find(d => {
+                    const nx = h.x + d.x, ny = h.y + d.y;
+                    return !(nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS ||
+                        snake.some(s => s.x === nx && s.y === ny));
+                });
+                if (f) dir = f;
+            }
+        }
+
+        function reset() {
+            snake = [{x: 10, y: 10}];
+            food = {x: 15, y: 15};
+            dir = {x: 1, y: 0};
+            gameOver = false;
+            score = 0;
+            codeStatus.textContent = '▸ running...';
+        }
+
+        let frame = 0;
+        function loop() {
+            aiDir();
+            if (frame % 8 === 0) update();
+            draw();
+            frame++;
+            setTimeout(loop, 50);
+        }
+        loop();
+        });
+    }
+}
+
+function initArt() {
+    const canvas = document.getElementById('artCanvas');
+    const status = document.getElementById('artStatus');
+    if (!canvas || !status) return;
+
+    const wrap = canvas.parentElement;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            startArt();
+            observer.disconnect();
+        }
+    }, { threshold: 0.3 });
+    observer.observe(wrap);
+
+    let phase = 0; 
+    let progress = 0;
+    let branches = [];
+    let ctx;
+
+    function startArt() {
+        canvas.width = canvas.clientWidth;
+        canvas.height = 220;
+        ctx = canvas.getContext('2d');
+        status.textContent = '▸ sketching...';
+        status.classList.add('active');
+        phase = 0;
+        progress = 0;
+        branches = [];
+        animateArt();
+    }
+
+    const foxPath = [
+        { type: 'move', x: 0.2, y: 0.7 },
+        { type: 'curve', cx1: 0.22, cy1: 0.55, cx2: 0.25, cy2: 0.4, x: 0.3, y: 0.3 },
+        { type: 'curve', cx1: 0.28, cy1: 0.22, cx2: 0.25, cy2: 0.12, x: 0.2, y: 0.08 },
+        { type: 'curve', cx1: 0.22, cy1: 0.1, cx2: 0.3, cy2: 0.05, x: 0.35, y: 0.1 },
+        { type: 'curve', cx1: 0.35, cy1: 0.15, cx2: 0.4, cy2: 0.18, x: 0.38, y: 0.2 },
+        { type: 'curve', cx1: 0.45, cy1: 0.15, cx2: 0.55, cy2: 0.15, x: 0.55, y: 0.2 },
+        { type: 'curve', cx1: 0.5, cy1: 0.2, cx2: 0.45, cy2: 0.22, x: 0.42, y: 0.28 },
+        { type: 'curve', cx1: 0.5, cy1: 0.28, cx2: 0.6, cy2: 0.3, x: 0.6, y: 0.35 },
+        { type: 'curve', cx1: 0.55, cy1: 0.35, cx2: 0.48, cy2: 0.38, x: 0.45, y: 0.4 },
+        { type: 'curve', cx1: 0.5, cy1: 0.45, cx2: 0.55, cy2: 0.55, x: 0.5, y: 0.62 },
+        { type: 'curve', cx1: 0.48, cy1: 0.58, cx2: 0.4, cy2: 0.65, x: 0.38, y: 0.68 },
+        { type: 'curve', cx1: 0.4, cy1: 0.7, cx2: 0.35, cy2: 0.72, x: 0.32, y: 0.7 },
+        { type: 'curve', cx1: 0.3, cy1: 0.72, cx2: 0.25, cy2: 0.73, x: 0.2, y: 0.7 },
+    ];
+
+    const totalSteps = foxPath.length;
+
+    function drawSegment(i, t) {
+        const p = foxPath[i];
+        const pw = canvas.width, ph = canvas.height;
+        if (p.type === 'move') {
+            ctx.moveTo(p.x * pw, p.y * ph);
+            return;
+        }
+        const endX = p.x * pw, endY = p.y * ph;
+        const c1x = p.cx1 * pw, c1y = p.cy1 * ph;
+        const c2x = p.cx2 * pw, c2y = p.cy2 * ph;
+        const steps = 20;
+        const drawSteps = Math.floor(steps * t);
+        for (let s = 0; s <= drawSteps; s++) {
+            const u = s / steps;
+            const bx = Math.pow(1 - u, 3) * (i === 1 ? foxPath[0].x * pw : ctx.lastX) +
+                3 * Math.pow(1 - u, 2) * u * c1x +
+                3 * (1 - u) * Math.pow(u, 2) * c2x +
+                Math.pow(u, 3) * endX;
+            const by = Math.pow(1 - u, 3) * (i === 1 ? foxPath[0].y * ph : ctx.lastY) +
+                3 * Math.pow(1 - u, 2) * u * c1y +
+                3 * (1 - u) * Math.pow(u, 2) * c2y +
+                Math.pow(u, 3) * endY;
+            if (s === 0) ctx.lineTo(bx, by);
+            else ctx.lineTo(bx, by);
+        }
+        ctx.lastX = endX;
+        ctx.lastY = endY;
+    }
+
+    function drawFox() {
+        const pw = canvas.width, ph = canvas.height;
+        ctx.lastX = foxPath[0].x * pw;
+        ctx.lastY = foxPath[0].y * ph;
+        const segsDone = Math.floor(progress);
+        const segT = progress - segsDone;
+        ctx.beginPath();
+        ctx.moveTo(foxPath[0].x * pw, foxPath[0].y * ph);
+        for (let i = 1; i <= Math.min(segsDone, totalSteps - 1); i++) {
+            const p = foxPath[i];
+            const endX = p.x * pw, endY = p.y * ph;
+            if (i < segsDone) {
+                ctx.bezierCurveTo(p.cx1 * pw, p.cy1 * ph, p.cx2 * pw, p.cy2 * ph, endX, endY);
+                ctx.lastX = endX; ctx.lastY = endY;
+            } else {
+                const u = segT;
+                const bx = Math.pow(1-u,3) * ctx.lastX + 3*Math.pow(1-u,2)*u * p.cx1*pw + 3*(1-u)*Math.pow(u,2) * p.cx2*pw + Math.pow(u,3) * endX;
+                const by = Math.pow(1-u,3) * ctx.lastY + 3*Math.pow(1-u,2)*u * p.cy1*ph + 3*(1-u)*Math.pow(u,2) * p.cy2*ph + Math.pow(u,3) * endY;
+                ctx.lineTo(bx, by);
+            }
+        }
+        ctx.strokeStyle = '#F77F00';
+        ctx.lineWidth = 2;
+        ctx.shadowColor = '#F77F00';
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    }
+
+    function spawnBranches() {
+        if (branches.length < 60 && Math.random() < 0.15) {
+            const bx = Math.random() * canvas.width;
+            const by = Math.random() * canvas.height;
+            branches.push({
+                x: bx, y: by,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: -Math.random() * 0.5 - 0.1,
+                life: 1,
+                hue: Math.random() > 0.5 ? 35 : 15,
+                size: Math.random() * 1.5 + 0.5
+            });
+        }
+    }
+
+    function updateBranches() {
+        for (let i = branches.length - 1; i >= 0; i--) {
+            const b = branches[i];
+            b.x += b.vx;
+            b.y += b.vy;
+            b.vy += 0.002;
+            b.life -= 0.003;
+            b.vx += (Math.random() - 0.5) * 0.02;
+            if (b.life <= 0 || b.y > canvas.height) {
+                branches.splice(i, 1);
+            }
+        }
+    }
+
+    function drawBranches() {
+        branches.forEach(b => {
+            ctx.globalAlpha = b.life * 0.4;
+            ctx.fillStyle = b.hue === 35 ? '#FCBF49' : '#D62828';
+            ctx.shadowColor = b.hue === 35 ? '#FCBF49' : '#D62828';
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+    }
+
+    function animateArt() {
+        if (phase === 0) {
+            progress += 0.015;
+            if (progress >= totalSteps) {
+                progress = totalSteps - 1;
+                phase = 1;
+                status.textContent = '▸ inking...';
+            }
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#000d17';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (progress > 0) drawFox();
+        if (phase >= 1) {
+            spawnBranches();
+            updateBranches();
+            drawBranches();
+        }
+        requestAnimationFrame(animateArt);
+    }
+}
+
+function initAnim() {
+    const canvas = document.getElementById('animCanvas');
+    const status = document.getElementById('animStatus');
+    if (!canvas || !status) return;
+
+    const wrap = canvas.parentElement;
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            startAnim();
+            observer.disconnect();
+        }
+    }, { threshold: 0.3 });
+    observer.observe(wrap);
+
+    let phase = 0;
+    let morphT = 0;
+    let morphCycle = 0;
+    let ball = { x: 0, y: 0, vy: 0, vx: 2 };
+    let particles = [];
+    let ctx;
+
+    const shapes = [
+        {
+            name: 'fox',
+            color: '#F77F00',
+            shadow: 'rgba(247,127,0,0.3)',
+            verts: [
+                [0.5, 0.08], [0.62, 0.12], [0.58, 0.2], [0.7, 0.25],
+                [0.65, 0.32], [0.55, 0.3], [0.5, 0.38], [0.5, 0.7],
+                [0.45, 0.7], [0.45, 0.38], [0.35, 0.3], [0.3, 0.32],
+                [0.35, 0.25], [0.42, 0.2], [0.38, 0.12]
+            ]
+        },
+        {
+            name: 'bird',
+            color: '#FCBF49',
+            shadow: 'rgba(252,191,73,0.3)',
+            verts: [
+                [0.5, 0.1], [0.55, 0.08], [0.6, 0.1], [0.75, 0.15],
+                [0.85, 0.18], [0.8, 0.25], [0.65, 0.28], [0.52, 0.3],
+                [0.5, 0.5], [0.5, 0.7], [0.45, 0.7], [0.45, 0.5],
+                [0.35, 0.28], [0.2, 0.25], [0.15, 0.18],
+                [0.25, 0.15], [0.4, 0.1], [0.45, 0.08]
+            ]
+        },
+        {
+            name: 'cat',
+            color: '#D62828',
+            shadow: 'rgba(214,40,40,0.3)',
+            verts: [
+                [0.5, 0.05], [0.56, 0.05], [0.6, 0.1], [0.68, 0.12],
+                [0.72, 0.18], [0.7, 0.25], [0.65, 0.28], [0.55, 0.3],
+                [0.5, 0.38], [0.5, 0.7], [0.45, 0.7], [0.45, 0.38],
+                [0.35, 0.3], [0.3, 0.28], [0.28, 0.25],
+                [0.32, 0.18], [0.4, 0.12], [0.44, 0.1]
+            ]
+        }
+    ];
+
+    function startAnim() {
+        canvas.width = canvas.clientWidth;
+        canvas.height = 180;
+        ctx = canvas.getContext('2d');
+        status.textContent = '▸ morphing...';
+        status.classList.add('active');
+        phase = 0; morphT = 0; morphCycle = 0;
+        ball.x = 40; ball.y = 30; ball.vy = 0; ball.vx = 2;
+        particles = [];
+        animateAnim();
+    }
+
+    function lerpVerts(v1, v2, t) {
+        const max = Math.max(v1.length, v2.length);
+        const result = [];
+        for (let i = 0; i < max; i++) {
+            const a = v1[i % v1.length] || v1[v1.length - 1];
+            const b = v2[i % v2.length] || v2[v2.length - 1];
+            result.push([
+                a[0] + (b[0] - a[0]) * t,
+                a[1] + (b[1] - a[1]) * t
+            ]);
+        }
+        return result;
+    }
+
+    function lerpColor(c1, c2, t) {
+        const r1 = parseInt(c1.slice(1, 3), 16), g1 = parseInt(c1.slice(3, 5), 16), b1 = parseInt(c1.slice(5, 7), 16);
+        const r2 = parseInt(c2.slice(1, 3), 16), g2 = parseInt(c2.slice(3, 5), 16), b2 = parseInt(c2.slice(5, 7), 16);
+        const r = Math.round(r1 + (r2 - r1) * t);
+        const g = Math.round(g1 + (g2 - g1) * t);
+        const b = Math.round(b1 + (b2 - b1) * t);
+        return `rgb(${r},${g},${b})`;
+    }
+
+    function drawShape(verts, color, shadow) {
+        const pw = canvas.width, ph = canvas.height;
+        const cx = pw / 2, cy = ph / 2 + 10;
+        const sc = 0.6;
+        ctx.beginPath();
+        verts.forEach((v, i) => {
+            const x = cx + (v[0] - 0.5) * pw * sc;
+            const y = cy + (v[1] - 0.5) * ph * sc;
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        });
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.shadowColor = shadow;
+        ctx.shadowBlur = 20;
+        ctx.fill();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.shadowBlur = 0;
+        ctx.stroke();
+    }
+
+    function spawnParticle(x, y) {
+        particles.push({
+            x, y, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3,
+            life: 1, size: Math.random() * 3 + 1
+        });
+    }
+
+    function cycle() {
+        if (phase === 0) {
+            morphT += 0.008;
+            if (morphT >= 1) {
+                morphT = 0;
+                morphCycle++;
+                if (morphCycle >= 6) {
+                    phase = 1;
+                    status.textContent = '▸ bouncing...';
+                }
+            }
+        }
+        if (phase === 1) {
+            const gravity = 0.3;
+            ball.vy += gravity;
+            ball.y += ball.vy;
+            ball.x += ball.vx;
+            if (ball.y > canvas.height - 20) {
+                ball.y = canvas.height - 20;
+                ball.vy *= -0.65;
+                if (Math.abs(ball.vy) < 0.5) ball.vy = 0;
+                for (let i = 0; i < 5; i++) spawnParticle(ball.x, ball.y);
+            }
+            if (ball.x > canvas.width - 20 || ball.x < 20) ball.vx *= -1;
+            if (Math.abs(ball.vy) < 0.3 && ball.y >= canvas.height - 22) ball.vy = -3;
+            if (Math.random() < 0.1) spawnParticle(ball.x, ball.y);
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#000d17';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (phase === 0) {
+            const s1 = morphCycle % 3;
+            const s2 = (s1 + 1) % 3;
+            const verts = lerpVerts(shapes[s1].verts, shapes[s2].verts, morphT);
+            const color = lerpColor(shapes[s1].color, shapes[s2].color, morphT);
+            drawShape(verts, color, 'rgba(255,200,100,0.15)');
+            const names = ['Fox','Bird','Cat'];
+            ctx.fillStyle = 'rgba(234,226,183,0.5)';
+            ctx.font = '9px Space Mono';
+            ctx.textAlign = 'center';
+            ctx.fillText(names[s1] + ' → ' + names[s2], canvas.width / 2, 20);
+        }
+        if (phase === 1) {
+            ctx.fillStyle = '#D62828';
+            ctx.shadowColor = '#D62828';
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            const cycleHue = Math.floor((Date.now() / 200) % 3);
+            const colors = ['#F77F00', '#FCBF49', '#D62828'];
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                p.vy += 0.05;
+                p.life -= 0.02;
+                ctx.globalAlpha = p.life;
+                ctx.fillStyle = colors[Math.floor((i + cycleHue) % 3)];
+                ctx.shadowColor = colors[Math.floor((i + cycleHue) % 3)];
+                ctx.shadowBlur = 5;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+            particles = particles.filter(p => p.life > 0);
+        }
+    }
+
+    function animateAnim() {
+        cycle();
+        draw();
+        requestAnimationFrame(animateAnim);
+    }
+}

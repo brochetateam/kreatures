@@ -107,10 +107,11 @@
                             <li>Network & AI Systems</li>
                         </ul>
                         <div class="domain-code">
-                            <pre><code>spawnKreature({
-  type: 'digital',
-  power: Infinity
-});</code></pre>
+                            <div class="code-stage" id="codeStage">
+                                <pre class="code-typer"><code id="codeTyper"></code><span class="code-cursor">▌</span></pre>
+                                <canvas id="snakeCanvas" class="domain-canvas hidden"></canvas>
+                            </div>
+                            <span class="domain-status" id="codeStatus">▸ booting...</span>
                         </div>
                     </div>
                 </article>
@@ -136,7 +137,10 @@
                             <li>High & Low Poly</li>
                             <li>UI/UX Game Interfaces</li>
                         </ul>
-                        <div class="domain-art-grid"></div>
+                        <div class="domain-canvas-wrap">
+                            <canvas id="artCanvas" class="domain-canvas"></canvas>
+                            <span class="domain-status" id="artStatus">▸ sketching...</span>
+                        </div>
                     </div>
                 </article>
 
@@ -161,9 +165,9 @@
                             <li>Particle VFX</li>
                             <li>Motion Capture Cleanup</li>
                         </ul>
-                        <div class="domain-timeline">
-                            <div class="tl-track"></div>
-                            <div class="tl-dot"></div>
+                        <div class="domain-canvas-wrap">
+                            <canvas id="animCanvas" class="domain-canvas"></canvas>
+                            <span class="domain-status" id="animStatus">▸ morphing...</span>
                         </div>
                     </div>
                 </article>
