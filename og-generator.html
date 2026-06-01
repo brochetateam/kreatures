@@ -179,7 +179,7 @@ function download(type) {
     const id = type === 'desk' ? 'ogDesk' : 'ogMob';
     const c = document.getElementById(id);
     const link = document.createElement('a');
-    link.download = type === 'desk' ? 'og-image-1200x630.png' : 'og-image-600x600.png';
+    link.download = type === 'desk' ? 'og-image.png' : 'og-image-movil.png';
     link.href = c.toDataURL('image/png');
     link.click();
 }
