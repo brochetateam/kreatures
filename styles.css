@@ -210,13 +210,13 @@ body {
 }
 
 .hero-text {
-    flex: 1; z-index: 5; max-width: 650px;
+    flex: 1; z-index: 5; max-width: 750px;
     min-width: 0;
 }
 .hero-title { margin-bottom: 1.5rem; }
 .title-word {
     display: block; font-family: var(--font-display);
-    font-size: clamp(4rem, 12vw, 9rem); font-weight: 900;
+    font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900;
     line-height: 0.9; letter-spacing: -2px;
     opacity: 0; transform: translateY(40px);
     animation: riseWord 0.8s var(--ease-out) forwards;
@@ -528,10 +528,11 @@ body {
 .skip-pages span:hover, .skip-pages span.active { color: var(--red); }
 
 @media (max-width: 1100px) {
-    .hero { flex-direction: column; justify-content: center; text-align: center; gap: 1rem; padding-top: 6rem; }
-    .hero-circle { width: min(70vmin, 400px); height: min(70vmin, 400px); margin-left: 0; flex-shrink: 0; }
+    .hero { flex-direction: column; text-align: center; gap: 2rem; padding: 8rem 2.5rem 4rem; min-height: auto; }
+    .hero-circle { width: min(75vmin, 500px); height: min(75vmin, 500px); margin: 0 auto; flex-shrink: 0; }
     .hero-text { text-align: center; }
     .hero-line { margin-left: auto; margin-right: auto; }
+    .hero-scroll { display: none; }
     .divisions-container { grid-template-columns: 1fr; }
     .tarots { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
     .contact-dual { grid-template-columns: 1fr; }
@@ -544,10 +545,9 @@ body {
     .nav-toggle { display: flex; cursor: pointer; }
     .mobile-menu { display: block; }
     .section-label { padding: 0 1.5rem; padding-top: 4rem; }
-    .hero { padding: 0 1.5rem; padding-top: 5rem; }
-    .hero-circle { width: min(60vmin, 300px); height: min(60vmin, 300px); margin: 0 auto; }
-    .hero-text { text-align: center; margin-left: 0; }
-    .hero-scroll { display: none; }
+    .hero { padding: 9rem 1.5rem 4rem; gap: 1.5rem; }
+    .hero-circle { width: min(80vmin, 380px); height: min(80vmin, 380px); margin: 0 auto; }
+    .hero-text { text-align: center; }
     .divisions-container { padding: 0 1.5rem 3rem; }
     .tarots { padding: 0 1.5rem 4rem; }
     .contact-dual { padding: 0 1.5rem; gap: 2rem; }
@@ -557,8 +557,8 @@ body {
 }
 
 @media (max-width: 480px) {
-    .hero { padding-top: 4rem; }
-    .hero-circle { width: min(55vmin, 250px); height: min(55vmin, 250px); }
+    .hero { padding: 7rem 1.25rem 3rem; gap: 1rem; }
+    .hero-circle { width: min(85vmin, 320px); height: min(85vmin, 320px); }
     .title-word { font-size: clamp(2.5rem, 14vw, 4rem); }
     .hero-sub { font-size: 0.75rem; }
     .beast { width: 22%; height: 22%; }
