@@ -255,15 +255,16 @@ body::after {
 .hero-eye {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 6vmin; height: 14vmin; border-radius: 45%;
-    background: var(--bg); border: 1px solid color-mix(in srgb, var(--butterscotch) 40%, transparent);
+    background: color-mix(in srgb, var(--bg) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--butterscotch) 30%, transparent);
     overflow: hidden; z-index: 2;
 }
 .hero-pupil {
-    position: absolute; width: 28%; height: 88%; top: 50%; left: 50%;
+    position: absolute; width: 26%; height: 86%; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--butterscotch);
-    clip-path: polygon(50% 0%, 25% 20%, 32% 50%, 25% 80%, 50% 100%, 75% 80%, 68% 50%, 75% 20%);
-    box-shadow: 0 0 15px var(--butterscotch), 0 0 40px color-mix(in srgb, var(--butterscotch) 30%, transparent);
+    background: color-mix(in srgb, var(--butterscotch) 25%, transparent);
+    clip-path: polygon(50% 0%, 18% 15%, 34% 50%, 18% 85%, 50% 100%, 82% 85%, 66% 50%, 82% 15%);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--butterscotch) 15%, transparent), 0 0 60px color-mix(in srgb, var(--butterscotch) 8%, transparent);
     transition: transform 0.1s var(--ease);
 }
 
