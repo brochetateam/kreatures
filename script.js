@@ -55,6 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo && pupil) {
+        heroVideo.addEventListener('timeupdate', () => {
+            pupil.style.opacity = heroVideo.currentTime >= 7 ? '1' : '0';
+        });
+    }
+
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
 
