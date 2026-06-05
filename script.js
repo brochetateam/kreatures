@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const cy = rect.top + rect.height / 2;
             const dx = (mouseX - cx) / rect.width;
             const dy = (mouseY - cy) / rect.height;
-            const maxMove = 30;
-            pupil.style.transform = `translate(-50%, -50%) translate(${dx * maxMove}px, ${dy * maxMove}px)`;
+            const maxMoveX = 25, maxMoveY = 8;
+            pupil.style.transform = `translate(-50%, -50%) translate(${dx * maxMoveX}px, ${dy * maxMoveY}px)`;
         }
         if (magneticBtn) {
             const rect = magneticBtn.getBoundingClientRect();

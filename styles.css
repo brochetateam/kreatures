@@ -254,15 +254,15 @@ body::after {
 
 .hero-eye {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 12vmin; height: 12vmin; border-radius: 50%;
-    background: var(--bg); border: 1px solid color-mix(in srgb, var(--red) 30%, transparent);
+    width: 14vmin; height: 7vmin; border-radius: 50%;
+    background: var(--bg); border: 1px solid color-mix(in srgb, var(--butterscotch) 40%, transparent);
     overflow: hidden; z-index: 2;
 }
 .hero-pupil {
-    position: absolute; width: 40%; height: 40%; border-radius: 50%;
-    background: var(--red); top: 50%; left: 50%;
+    position: absolute; width: 14%; height: 82%; border-radius: 30%;
+    background: var(--butterscotch); top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px var(--red);
+    box-shadow: 0 0 15px var(--butterscotch), 0 0 40px color-mix(in srgb, var(--butterscotch) 30%, transparent);
     transition: transform 0.1s var(--ease);
 }
 
@@ -767,7 +767,7 @@ body::after {
     .domain-code { font-size: 0.8rem; }
     .tarot-body h3 { font-size: 1.4rem; }
     .beast { width: 22%; height: 22%; }
-    .hero-eye { width: 16vmin; height: 16vmin; }
+    .hero-eye { width: 18vmin; height: 9vmin; }
     .tarot-img { height: 220px !important; }
     .domain { padding: 1.5rem; }
 }
