@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initTheme() {
         const saved = localStorage.getItem('kreatures-theme');
         if (saved && themes.includes(saved)) { setTheme(saved); return; }
-        const rand = themes[Math.floor(Math.random() * themes.length)];
-        setTheme(rand);
+        setTheme('pale');
     }
     initTheme();
     document.querySelectorAll('.theme-dot').forEach(dot => {

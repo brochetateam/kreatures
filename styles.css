@@ -199,8 +199,10 @@ body::after {
 }
 .hero-video {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    border-radius: 50%; object-fit: cover;
+    object-fit: cover;
     opacity: 0.5; pointer-events: none; z-index: 0;
+    mask-image: radial-gradient(circle, black 35%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 35%, transparent 70%);
 }
 
 .ring {
