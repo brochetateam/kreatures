@@ -197,14 +197,13 @@ body::after {
     width: min(65vmin, 550px); height: min(65vmin, 550px);
     margin-left: -2%; pointer-events: none;
 }
-.page-video {
-    position: fixed; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; z-index: -1; pointer-events: none;
-    opacity: 0.45;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+.hero-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.5; pointer-events: none; z-index: 0;
+    mask-image: radial-gradient(circle, black 35%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 35%, transparent 70%);
 }
-.page-video source { width: 100%; height: 100%; }
 
 .ring {
     position: absolute; inset: 0; border-radius: 50%;
@@ -302,7 +301,7 @@ body::after {
     50% { transform: scaleY(1); opacity: 1; }
 }
 
-.divisions { background: color-mix(in srgb, var(--bg-deep) 88%, transparent); }
+.divisions { background: var(--bg-deep); }
 .divisions-container {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 1px; padding: 0 2.5rem 4rem;
@@ -454,7 +453,7 @@ body::after {
 .domain[data-domain="anim"] .domain-status.active { color: var(--red); }
 @keyframes blinkStatus { 50% { opacity: 0.3; } }
 
-.team { background: color-mix(in srgb, var(--bg) 88%, transparent); }
+.team { background: var(--bg); }
 .tarots {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -540,7 +539,7 @@ body::after {
 .tarot[data-beast="owl"] .tstat-fill { background: var(--butterscotch); }
 .tarot[data-beast="mouse"] .tstat-fill { background: var(--orange); }
 
-.contact { background: color-mix(in srgb, var(--bg-deep) 88%, transparent); padding-bottom: 6rem; }
+.contact { background: var(--bg-deep); padding-bottom: 6rem; }
 .contact-dual {
     display: grid; grid-template-columns: 1fr 1.5fr;
     gap: 4rem; padding: 0 2.5rem; align-items: center;
