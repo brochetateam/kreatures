@@ -52,6 +52,72 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const heroCircle = document.querySelector('.hero-circle');
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroCircle && heroVideo) {
+        const canvas = document.createElement('canvas');
+        canvas.className = 'hero-particles';
+        canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;mask-image:radial-gradient(circle,black 35%,transparent 70%);-webkit-mask-image:radial-gradient(circle,black 35%,transparent 70%)';
+        heroCircle.insertBefore(canvas, heroCircle.firstChild);
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        const NUM = 60;
+
+        function resizeParticles() {
+            const r = heroCircle.getBoundingClientRect();
+            canvas.width = r.width; canvas.height = r.height;
+        }
+        resizeParticles();
+        window.addEventListener('resize', resizeParticles);
+
+        class Ember {
+            constructor() {
+                const a = Math.random() * Math.PI * 2;
+                const d = 0.15 + Math.random() * 0.35;
+                this.sx = 0.5 + Math.cos(a) * d;
+                this.sy = 0.5 + Math.sin(a) * d;
+                this.ex = 0.5 + Math.cos(a + Math.PI) * d;
+                this.ey = 0.5 + Math.sin(a + Math.PI) * d;
+                this.size = 1 + Math.random() * 2.5;
+                this.delay = Math.random() * 0.15;
+            }
+        }
+        for (let i = 0; i < NUM; i++) particles.push(new Ember());
+
+        (function animateParticles() {
+            const dur = heroVideo.duration || 10;
+            const t = heroVideo.currentTime / dur;
+            const p = Math.max(0, Math.min(1, (t - 0.08) / 0.84));
+            const w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(w/2, h/2, Math.min(w,h)/2, 0, Math.PI*2);
+            ctx.clip();
+            for (const e of particles) {
+                const phase = Math.max(0, Math.min(1, (p - e.delay) / (1 - e.delay)));
+                let x, y, alpha;
+                if (phase < 0.6) {
+                    const f = (phase / 0.6) ** 2;
+                    x = e.sx + (0.5 - e.sx) * f;
+                    y = e.sy + (0.5 - e.sy) * f;
+                    alpha = f * 0.5;
+                } else {
+                    const f = 1 - ((phase - 0.6) / 0.4) ** 2;
+                    x = 0.5 + (e.ex - 0.5) * (1 - f);
+                    y = 0.5 + (e.ey - 0.5) * (1 - f);
+                    alpha = f * 0.5;
+                }
+                ctx.beginPath();
+                ctx.arc(x * w, y * h, e.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(252,191,73,${alpha})`;
+                ctx.fill();
+            }
+            ctx.restore();
+            requestAnimationFrame(animateParticles);
+        })();
+    }
+
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
 
