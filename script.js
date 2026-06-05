@@ -11,8 +11,6 @@ function cssRgba(name, alpha) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const cursor = document.getElementById('cursorGlow');
-    const pupil = document.querySelector('.hero-pupil');
-    const heroCircle = document.querySelector('.hero-circle');
     const skipFill = document.getElementById('skipFill');
     const skipPages = document.querySelectorAll('.skip-pages span');
     const sections = document.querySelectorAll('.section');
@@ -55,13 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const heroVideo = document.querySelector('.hero-video');
-    if (heroVideo && pupil) {
-        heroVideo.addEventListener('timeupdate', () => {
-            pupil.style.opacity = heroVideo.currentTime >= 7 ? '1' : '0';
-        });
-    }
-
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
 
@@ -76,15 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursor) {
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
-        }
-        if (pupil && heroCircle) {
-            const rect = heroCircle.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-            const dx = (mouseX - cx) / rect.width;
-            const dy = (mouseY - cy) / rect.height;
-            const maxMoveX = 25, maxMoveY = 8;
-            pupil.style.transform = `translate(-50%, -50%) translate(${dx * maxMoveX}px, ${dy * maxMoveY}px)`;
         }
         if (magneticBtn) {
             const rect = magneticBtn.getBoundingClientRect();
